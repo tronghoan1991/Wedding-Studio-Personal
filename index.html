@@ -7,145 +7,33 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; img-src 'self' data: blob: https://*.supabase.co; media-src 'self' blob: https://*.supabase.co; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self' https://*.supabase.co; form-action 'self'">
   <meta name="description" content="Thiệp cưới cá nhân">
   <title>Thiệp cưới</title>
-  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/base.css?v=20261005-6">
   <link rel="stylesheet" href="assets/css/themes.css">
 </head>
 <body data-theme="mint" data-card="classic">
   <div id="lockScreen" class="lock-screen" hidden>
     <form id="lockForm" class="panel narrow">
-      <h1>Thiệp riêng tư</h1>
-      <p>Nhập mật khẩu để xem thiệp.</p>
-      <input id="lockPassword" type="password" autocomplete="current-password" required>
-      <button class="btn" type="submit">Mở thiệp</button>
-      <p id="lockError" class="error" hidden></p>
+      <h1>Thiệp riêng tư</h1><p>Nhập mật khẩu để xem thiệp.</p><input id="lockPassword" type="password" autocomplete="current-password" required><button class="btn" type="submit">Mở thiệp</button><p id="lockError" class="error" hidden></p>
     </form>
   </div>
-
   <main id="site" hidden>
-    <section class="cover card-shell" id="cover">
-      <div class="fx-layer" id="fxLayer" aria-hidden="true"></div>
-      <div class="cover-inner">
-        <div class="seal" aria-hidden="true">♥</div>
-        <p class="eyebrow" data-i18n="invite">TRÂN TRỌNG KÍNH MỜI</p>
-        <p id="guestHonorific" class="guest-honorific"></p>
-        <h1><span id="brideName">Cô dâu</span><i>&amp;</i><span id="groomName">Chú rể</span></h1>
-        <p id="guestMessage" class="lead"></p>
-        <button class="btn btn-light" id="openCard" type="button" data-i18n="openCard">Mở thiệp</button>
-      </div>
-    </section>
-
+    <section class="cover card-shell" id="cover"><div class="fx-layer" id="fxLayer" aria-hidden="true"></div><div class="cover-inner"><div class="seal" aria-hidden="true">♥</div><p class="eyebrow" data-i18n="invite">TRÂN TRỌNG KÍNH MỜI</p><p id="guestHonorific" class="guest-honorific"></p><h1><span id="brideName">Cô dâu</span><i>&amp;</i><span id="groomName">Chú rể</span></h1><p id="guestMessage" class="lead"></p><button class="btn btn-light" id="openCard" type="button" data-i18n="openCard">Mở thiệp</button></div></section>
     <div id="content" class="content" hidden>
-      <nav class="nav">
-        <a href="#story" data-i18n="story">Câu chuyện</a>
-        <a href="#event" data-i18n="event">Hôn lễ</a>
-        <a href="#gallery" data-i18n="gallery">Album</a>
-        <a href="#rsvp" data-i18n="rsvp">Xác nhận</a>
-        <a href="#wishes" data-i18n="wishes">Lời chúc</a>
-        <select id="langSelect" aria-label="Ngôn ngữ"></select>
-      </nav>
-
-      <section class="hero section" id="story">
-        <p class="eyebrow" data-i18n="saveDate">SAVE THE DATE</p>
-        <h2 id="dateText"></h2>
-        <p id="lunarText" class="muted"></p>
-        <div id="countdown" class="countdown">
-          <div><strong id="days">0</strong><span data-i18n="days">Ngày</span></div>
-          <div><strong id="hours">0</strong><span data-i18n="hours">Giờ</span></div>
-          <div><strong id="minutes">0</strong><span data-i18n="minutes">Phút</span></div>
-          <div><strong id="seconds">0</strong><span data-i18n="seconds">Giây</span></div>
-        </div>
-        <p id="storyText" class="story-text"></p>
-      </section>
-
-      <section class="section event" id="event">
-        <div class="panel">
-          <p class="eyebrow" data-i18n="event">HÔN LỄ</p>
-          <h2 id="venueName"></h2>
-          <p id="eventTime"></p>
-          <p id="venueAddress" class="muted"></p>
-          <div class="actions">
-            <a class="btn" id="mapLink" target="_blank" rel="noopener noreferrer" data-i18n="map">Mở bản đồ</a>
-            <button class="btn ghost" id="calendarBtn" type="button" data-i18n="calendar">Thêm vào lịch</button>
-          </div>
-        </div>
-      </section>
-
-      <section class="section gallery" id="gallery">
-        <p class="eyebrow" data-i18n="gallery">ALBUM</p>
-        <h2 id="galleryTitle"></h2>
-        <div id="albumLock" class="panel narrow" hidden>
-          <p data-i18n="albumLocked">Album đang được khóa.</p>
-          <input id="albumPassword" type="password" autocomplete="current-password">
-          <button id="albumUnlock" class="btn" type="button" data-i18n="unlock">Mở khóa</button>
-          <p id="albumError" class="error" hidden></p>
-        </div>
-        <div id="galleryGrid" class="gallery-grid"></div>
-      </section>
-
-      <section class="section" id="rsvp">
-        <div class="panel">
-          <p class="eyebrow" data-i18n="rsvp">XÁC NHẬN THAM DỰ</p>
-          <form id="rsvpForm" class="form-grid">
-            <label><span data-i18n="name">Tên</span><input name="name" id="rsvpName" maxlength="120" required></label>
-            <fieldset><legend data-i18n="attendQuestion">Bạn có thể tham dự?</legend>
-              <label><input type="radio" name="attend" value="yes" required> <span data-i18n="yes">Có</span></label>
-              <label><input type="radio" name="attend" value="no" required> <span data-i18n="no">Không</span></label>
-            </fieldset>
-            <label><span data-i18n="guestCount">Số người</span><input name="guests" type="number" min="1" max="20" value="1"></label>
-            <label class="full"><span data-i18n="note">Lời nhắn</span><textarea name="note" maxlength="500"></textarea></label>
-            <button class="btn" type="submit" data-i18n="send">Gửi xác nhận</button>
-            <p id="rsvpStatus" class="status"></p>
-          </form>
-        </div>
-      </section>
-
-      <section class="section" id="wishes">
-        <div class="panel">
-          <p class="eyebrow" data-i18n="wishes">LỜI CHÚC</p>
-          <form id="wishForm" class="form-grid compact">
-            <label><span data-i18n="name">Tên</span><input name="name" maxlength="120" required></label>
-            <label class="full"><span data-i18n="wish">Lời chúc</span><textarea name="message" maxlength="800" required></textarea></label>
-            <button class="btn" type="submit" data-i18n="sendWish">Gửi lời chúc</button>
-            <p id="wishStatus" class="status"></p>
-          </form>
-          <div id="wishList" class="wish-list"></div>
-        </div>
-      </section>
-
-      <section class="section" id="photos">
-        <div class="panel">
-          <p class="eyebrow" data-i18n="sharePhotos">CHIA SẺ ẢNH</p>
-          <p data-i18n="sharePhotosHelp">Khách có thể gửi ảnh kỷ niệm cho cô dâu chú rể.</p>
-          <a class="btn" id="uploadLink" data-i18n="uploadPhotos">Gửi ảnh</a>
-          <img id="uploadQr" class="qr" alt="QR gửi ảnh" hidden>
-        </div>
-      </section>
-
-      <section class="section gift" id="gift" hidden>
-        <div class="panel">
-          <p class="eyebrow" data-i18n="gift">MỪNG CƯỚI</p>
-          <h2 id="giftTitle"></h2>
-          <p id="giftText"></p>
-          <img id="giftQr" class="qr" alt="QR mừng cưới" hidden>
-        </div>
-      </section>
-
-      <footer class="footer">
-        <strong id="footerNames"></strong>
-        <p data-i18n="privacyNote">Trang này không sử dụng tracker quảng cáo. Dữ liệu RSVP/ảnh chỉ đi tới backend do chủ thiệp kiểm soát.</p>
-      </footer>
+      <nav class="nav"><a href="#story" data-i18n="story">Câu chuyện</a><a href="#event" data-i18n="event">Hôn lễ</a><a href="#gallery" data-i18n="gallery">Album</a><a href="#rsvp" data-i18n="rsvp">Xác nhận</a><a href="#wishes" data-i18n="wishes">Lời chúc</a><select id="langSelect" aria-label="Ngôn ngữ"></select></nav>
+      <section class="hero section" id="story"><p class="eyebrow" data-i18n="saveDate">SAVE THE DATE</p><h2 id="dateText"></h2><p id="lunarText" class="muted"></p><div id="countdown" class="countdown"><div><strong id="days">0</strong><span data-i18n="days">Ngày</span></div><div><strong id="hours">0</strong><span data-i18n="hours">Giờ</span></div><div><strong id="minutes">0</strong><span data-i18n="minutes">Phút</span></div><div><strong id="seconds">0</strong><span data-i18n="seconds">Giây</span></div></div><p id="storyText" class="story-text"></p></section>
+      <section class="section event" id="event"><div class="panel"><p class="eyebrow" data-i18n="event">HÔN LỄ</p><h2 id="venueName"></h2><p id="eventTime"></p><p id="venueAddress" class="muted"></p><div class="actions"><a class="btn" id="mapLink" target="_blank" rel="noopener noreferrer" data-i18n="map">Mở bản đồ</a><button class="btn ghost" id="calendarBtn" type="button" data-i18n="calendar">Thêm vào lịch</button></div></div></section>
+      <section class="section gallery" id="gallery"><p class="eyebrow" data-i18n="gallery">ALBUM</p><h2 id="galleryTitle"></h2><div id="albumLock" class="panel narrow" hidden><p data-i18n="albumLocked">Album đang được khóa.</p><input id="albumPassword" type="password" autocomplete="current-password"><button id="albumUnlock" class="btn" type="button" data-i18n="unlock">Mở khóa</button><p id="albumError" class="error" hidden></p></div><div id="galleryGrid" class="gallery-grid"></div></section>
+      <section class="section" id="rsvp"><div class="panel"><p class="eyebrow" data-i18n="rsvp">XÁC NHẬN THAM DỰ</p><form id="rsvpForm" class="form-grid"><label><span data-i18n="name">Tên</span><input name="name" id="rsvpName" maxlength="120" required></label><fieldset><legend data-i18n="attendQuestion">Bạn có thể tham dự?</legend><label><input type="radio" name="attend" value="yes" required> <span data-i18n="yes">Có</span></label><label><input type="radio" name="attend" value="no" required> <span data-i18n="no">Không</span></label></fieldset><label><span data-i18n="guestCount">Số người</span><input name="guests" type="number" min="1" max="20" value="1"></label><label class="full"><span data-i18n="note">Lời nhắn</span><textarea name="note" maxlength="500"></textarea></label><button class="btn" type="submit" data-i18n="send">Gửi xác nhận</button><p id="rsvpStatus" class="status"></p></form></div></section>
+      <section class="section" id="wishes"><div class="panel"><p class="eyebrow" data-i18n="wishes">LỜI CHÚC</p><form id="wishForm" class="form-grid compact"><label><span data-i18n="name">Tên</span><input name="name" maxlength="120" required></label><label class="full"><span data-i18n="wish">Lời chúc</span><textarea name="message" maxlength="800" required></textarea></label><button class="btn" type="submit" data-i18n="sendWish">Gửi lời chúc</button><p id="wishStatus" class="status"></p></form><div id="wishList" class="wish-list"></div></div></section>
+      <section class="section" id="photos"><div class="panel"><p class="eyebrow" data-i18n="sharePhotos">CHIA SẺ ẢNH</p><p data-i18n="sharePhotosHelp">Khách có thể gửi ảnh kỷ niệm cho cô dâu chú rể.</p><a class="btn" id="uploadLink" data-i18n="uploadPhotos">Gửi ảnh</a><img id="uploadQr" class="qr" alt="QR gửi ảnh" hidden></div></section>
+      <section class="section gift" id="gift" hidden><div class="panel"><p class="eyebrow" data-i18n="gift">MỪNG CƯỚI</p><h2 id="giftTitle"></h2><p id="giftText"></p><img id="giftQr" class="qr" alt="QR mừng cưới" hidden></div></section>
+      <footer class="footer"><strong id="footerNames"></strong><p data-i18n="privacyNote">Trang này không sử dụng tracker quảng cáo. Dữ liệu RSVP/ảnh chỉ đi tới backend do chủ thiệp kiểm soát.</p></footer>
     </div>
   </main>
-
-  <button id="musicBtn" class="music-btn" type="button" hidden aria-label="Bật/tắt nhạc">♫</button>
-  <audio id="music" loop preload="none"></audio>
-  <dialog id="lightbox"><button id="lightboxClose" class="close" type="button">×</button><img id="lightboxImg" alt="Ảnh cưới"></dialog>
-
-  <script src="config.js"></script>
-  <script src="assets/js/i18n.js"></script>
-  <script src="assets/js/lunar.js"></script>
-  <script src="assets/js/effects.js"></script>
-  <script src="assets/js/api.js"></script>
-  <script src="assets/js/app.js"></script>
-</body>
-</html>
+  <button id="musicBtn" class="music-btn" type="button" hidden aria-label="Bật/tắt nhạc">♫</button><audio id="music" loop preload="none"></audio>
+  <dialog id="lightbox" class="lightbox-dialog">
+    <div class="lightbox-toolbar"><button id="lightboxZoomOut" type="button" aria-label="Thu nhỏ">−</button><span id="lightboxZoomLabel">100%</span><button id="lightboxZoomIn" type="button" aria-label="Phóng to">+</button><button id="lightboxReset" type="button">Vừa màn hình</button><button id="lightboxClose" class="close" type="button" aria-label="Đóng">×</button></div>
+    <div id="lightboxStage" class="lightbox-stage"><img id="lightboxImg" alt="Ảnh cưới" title="Bấm vào ảnh để phóng to / thu nhỏ"></div>
+  </dialog>
+  <script src="config.js"></script><script src="assets/js/i18n.js"></script><script src="assets/js/lunar.js"></script><script src="assets/js/effects.js"></script><script src="assets/js/api.js"></script><script src="assets/js/app.js?v=20261005-6"></script>
+</body></html>
