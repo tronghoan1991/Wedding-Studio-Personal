@@ -1,4 +1,5 @@
-create extension if not exists pgcrypto;
+create schema if not exists extensions;
+create extension if not exists pgcrypto with schema extensions;
 
 create table if not exists public.site_settings (
   id uuid primary key,
@@ -73,6 +74,13 @@ returns boolean language sql stable as $$
   )
 $$;
 
+drop policy if exists "owner select site" on public.site_settings;
+drop policy if exists "owner update site" on public.site_settings;
+drop policy if exists "owner guests" on public.guests;
+drop policy if exists "owner rsvps" on public.rsvps;
+drop policy if exists "owner wishes" on public.wishes;
+drop policy if exists "owner photos" on public.photos;
+
 create policy "owner select site" on public.site_settings for select to authenticated using (public.is_configured_owner(site_settings));
 create policy "owner update site" on public.site_settings for update to authenticated using (public.is_configured_owner(site_settings)) with check (public.is_configured_owner(site_settings));
 create policy "owner guests" on public.guests for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
@@ -110,13 +118,13 @@ values (
 on conflict (id) do nothing;
 
 create or replace function public.hash_password(plain_text text)
-returns text language sql security definer set search_path=public as $$
-  select crypt(plain_text, gen_salt('bf', 12));
+returns text language sql security definer set search_path=public,extensions as $$
+  select extensions.crypt(plain_text, extensions.gen_salt('bf', 12));
 $$;
 
 create or replace function public.verify_password(plain_text text, password_hash text)
-returns boolean language sql security definer set search_path=public as $$
-  select password_hash is not null and crypt(plain_text, password_hash) = password_hash;
+returns boolean language sql security definer set search_path=public,extensions as $$
+  select password_hash is not null and extensions.crypt(plain_text, password_hash) = password_hash;
 $$;
 
 revoke all on function public.hash_password(text) from public;
