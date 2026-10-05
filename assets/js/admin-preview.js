@@ -54,6 +54,17 @@
     });
   }
 
+  // Giữ nguyên admin.js hiện tại nhưng tự bổ sung invitationLine vào payload lưu.
+  if(window.Api?.publicCall){
+    const originalCall=window.Api.publicCall.bind(window.Api);
+    window.Api.publicCall=(action,payload={},method='POST')=>{
+      if(action==='adminSaveSite'&&payload?.payload?.data){
+        payload={...payload,payload:{...payload.payload,data:{...payload.payload.data,invitationLine:text('invitationLine','')}}};
+      }
+      return originalCall(action,payload,method);
+    };
+  }
+
   form.addEventListener('input',render);form.addEventListener('change',render);
   window.AdminPreview={render};
   render();
