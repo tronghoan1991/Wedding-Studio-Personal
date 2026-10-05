@@ -3,7 +3,9 @@ window.Api=(()=>{
   const base=String(rawCfg.SUPABASE_URL||'').replace(/\/$/,'');
   const key=rawCfg.SUPABASE_PUBLISHABLE_KEY||'';
   const fn=rawCfg.API_FUNCTION||'bright-worker';
-  const uuidRe=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+  // Accept any canonical UUID, including the fixed primary site id
+  // 00000000-0000-0000-0000-000000000001 used by this project.
+  const uuidRe=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
   const urlSite=(()=>{try{return new URLSearchParams(location.search).get('site')||''}catch{return ''}})();
   let activeSiteId=uuidRe.test(urlSite)?urlSite:String(rawCfg.SITE_ID||'');
   let refreshPromise=null;
@@ -57,7 +59,7 @@ window.Api=(()=>{
   }
 
   async function publicCall(action,payload={},method='POST'){
-    if(!ready())throw new Error('Backend chưa được cấu hình');
+    if(!ready())throw new Error(`Backend chưa được cấu hình (SITE_ID: ${activeSiteId||'trống'})`);
     const bodyPayload={...payload};let adminToken=bodyPayload.adminToken||'';delete bodyPayload.adminToken;
     if(adminToken)adminToken=await ensureAdminToken(adminToken);
     try{
