@@ -11,7 +11,14 @@
       <label>Ngày giờ cưới<input name="eventDate" type="datetime-local"></label><label>Địa điểm<input name="venueName"></label>
       <label class="full">Địa chỉ<input name="venueAddress"></label><label class="full">Link bản đồ<input name="mapUrl" type="url"></label>
       <label>Giao diện<select name="theme"></select></label><label>Kiểu mở thiệp<select name="cardStyle"></select></label>
-      <label>Hiệu ứng<select name="effect"></select></label><label>Nhạc nền (URL)<input name="musicUrl"></label>
+      <label>Hiệu ứng<select name="effect"></select></label>
+      <label>Nhạc nền MP3
+        <input id="musicFile" type="file" accept=".mp3,audio/mpeg,audio/mp3">
+        <input name="musicUrl" id="musicUrl" type="hidden">
+        <div class="actions"><button class="btn ghost" id="uploadMusicBtn" type="button">Upload MP3</button></div>
+        <audio id="musicPreview" controls hidden style="width:100%;margin-top:8px"></audio>
+        <small id="musicUploadStatus" class="status"></small>
+      </label>
       <label class="full">Câu chuyện<textarea name="storyText" maxlength="3000"></textarea></label>
       <label>Tiêu đề album<input name="galleryTitle"></label><label>Link QR mừng cưới<input name="giftQrUrl"></label>
       <label>Tiêu đề mừng cưới<input name="giftTitle"></label><label>Thông tin mừng cưới<input name="giftText"></label>
@@ -28,5 +35,5 @@
     <section id="tab-backup" class="tab"><div class="panel"><h2>Sao lưu</h2><p>Xuất dữ liệu nội dung/khách/RSVP/lời chúc ra JSON để lưu offline.</p><div class="actions"><button class="btn" id="backupBtn">Tải backup JSON</button><label class="btn ghost">Khôi phục JSON<input id="restoreFile" type="file" accept="application/json" hidden></label></div><p id="backupStatus" class="status"></p></div></section>
   </section>
 </main>
-<script src="config.js"></script><script src="assets/js/admin-data.js"></script><script src="assets/js/api.js"></script><script src="assets/js/admin.js"></script>
+<script src="config.js"></script><script src="assets/js/admin-data.js"></script><script src="assets/js/api.js"></script><script src="assets/js/admin.js"></script><script src="assets/js/music-upload.js"></script>
 </body></html>
