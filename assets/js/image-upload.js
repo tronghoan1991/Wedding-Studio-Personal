@@ -38,6 +38,8 @@
     }catch(e){console.error(e);albumStatus.textContent=`Upload dừng do lỗi: ${e.message}`}finally{albumBtn.disabled=false}
   });
 
-  window.AdminImageUpload={render(){renderQr();renderAlbum()}};
-  setTimeout(()=>window.AdminImageUpload.render(),1000);
+  let lastState='';
+  function syncRender(){const state=`${qrHidden?.value||''}\n${albumHidden?.value||''}`;if(state!==lastState){lastState=state;renderQr();renderAlbum()}}
+  window.AdminImageUpload={render(){lastState='';syncRender()}};
+  syncRender();setInterval(syncRender,700);
 })();
