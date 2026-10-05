@@ -1,0 +1,2 @@
+[functions.wedding-api]
+verify_jwt = false
