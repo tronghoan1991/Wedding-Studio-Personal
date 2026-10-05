@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' blob: data: https://*.supabase.co; media-src 'self' blob: https://*.supabase.co; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self' https://*.supabase.co; object-src 'none'; base-uri 'self'"><title>Quản trị thiệp cưới</title><link rel="stylesheet" href="assets/css/base.css"><link rel="stylesheet" href="assets/css/admin.css"></head>
+<body class="admin-body">
+<main class="admin-wrap">
+  <section id="loginPanel" class="panel narrow"><h1>Quản trị thiệp</h1><p>Đăng nhập bằng tài khoản Supabase Auth của riêng bạn.</p><form id="loginForm" class="form-grid"><label>Email<input name="email" type="email" required></label><label>Mật khẩu<input name="password" type="password" required></label><button class="btn" type="submit">Đăng nhập</button><p id="loginStatus" class="status"></p></form></section>
+  <section id="dashboard" hidden>
+    <header class="admin-head"><div><h1>ThiepCuoi Standalone</h1><p id="who"></p></div><div class="actions"><a class="btn ghost" href="index.html" target="_blank">Xem thiệp</a><button class="btn ghost" id="logoutBtn">Đăng xuất</button></div></header>
+    <nav class="tabs"><button data-tab="site" class="active">Nội dung</button><button data-tab="guests">Khách mời</button><button data-tab="rsvp">RSVP</button><button data-tab="wishes">Lời chúc</button><button data-tab="photos">Ảnh khách</button><button data-tab="backup">Backup</button></nav>
+    <section id="tab-site" class="tab active"><form id="siteForm" class="panel form-grid two">
+      <label>Tên cô dâu<input name="brideName"></label><label>Tên chú rể<input name="groomName"></label>
+      <label>Ngày giờ cưới<input name="eventDate" type="datetime-local"></label><label>Địa điểm<input name="venueName"></label>
+      <label class="full">Địa chỉ<input name="venueAddress"></label><label class="full">Link bản đồ<input name="mapUrl" type="url"></label>
+      <label>Giao diện<select name="theme"></select></label><label>Kiểu mở thiệp<select name="cardStyle"></select></label>
+      <label>Hiệu ứng<select name="effect"></select></label><label>Nhạc nền (URL)<input name="musicUrl"></label>
+      <label class="full">Câu chuyện<textarea name="storyText" maxlength="3000"></textarea></label>
+      <label>Tiêu đề album<input name="galleryTitle"></label><label>Link QR mừng cưới<input name="giftQrUrl"></label>
+      <label>Tiêu đề mừng cưới<input name="giftTitle"></label><label>Thông tin mừng cưới<input name="giftText"></label>
+      <label>Mật khẩu trang (để trống = tắt)<input name="pagePassword" type="password"></label><label>Mật khẩu album<input name="albumPassword" type="password"></label>
+      <label>Mã upload ảnh qua QR<input name="photoUploadCode"></label><label><input type="checkbox" name="isPublic"> Cho khách xem</label>
+      <fieldset class="full"><legend>Ngôn ngữ</legend><label><input type="checkbox" name="lang_vi" value="vi"> Việt</label> <label><input type="checkbox" name="lang_en" value="en"> English</label> <label><input type="checkbox" name="lang_zh" value="zh"> 中文</label> <label><input type="checkbox" name="lang_lo" value="lo"> ລາວ</label> <label><input type="checkbox" name="lang_th" value="th"> ไทย</label> <label><input type="checkbox" name="lang_fr" value="fr"> Français</label></fieldset>
+      <label class="full">Album ảnh (mỗi dòng 1 URL)<textarea name="gallery" rows="8"></textarea></label>
+      <button class="btn" type="submit">Lưu nội dung</button><p id="siteStatus" class="status"></p>
+    </form></section>
+    <section id="tab-guests" class="tab"><div class="panel"><div class="admin-grid"><form id="guestForm" class="form-grid"><h2>Thêm khách</h2><label>Tên<input name="name" required></label><label>Xưng hô<select name="honorific"></select></label><label>Nhà<select name="side"><option value="groom">Nhà trai</option><option value="bride">Nhà gái</option><option value="other">Khác</option></select></label><label class="full">Lời mời riêng<textarea name="message"></textarea></label><button class="btn" type="submit">Thêm khách</button></form><div><h2>Danh sách</h2><div class="actions"><button class="btn ghost" id="exportGuests">Xuất CSV</button></div><div class="table-wrap"><table><thead><tr><th>Khách</th><th>Xưng hô</th><th>Đã mở</th><th>Link</th><th></th></tr></thead><tbody id="guestRows"></tbody></table></div></div></div></div></section>
+    <section id="tab-rsvp" class="tab"><div class="panel"><div class="actions"><button class="btn ghost" id="exportRsvp">Xuất CSV</button></div><div id="rsvpStats" class="stats"></div><div class="table-wrap"><table><thead><tr><th>Khách</th><th>Tham dự</th><th>Số người</th><th>Lời nhắn</th><th>Thời gian</th></tr></thead><tbody id="rsvpRows"></tbody></table></div></div></section>
+    <section id="tab-wishes" class="tab"><div class="panel"><div id="wishAdminList"></div></div></section>
+    <section id="tab-photos" class="tab"><div class="panel"><div id="photoAdminGrid" class="gallery-grid"></div></div></section>
+    <section id="tab-backup" class="tab"><div class="panel"><h2>Sao lưu</h2><p>Xuất dữ liệu nội dung/khách/RSVP/lời chúc ra JSON để lưu offline.</p><div class="actions"><button class="btn" id="backupBtn">Tải backup JSON</button><label class="btn ghost">Khôi phục JSON<input id="restoreFile" type="file" accept="application/json" hidden></label></div><p id="backupStatus" class="status"></p></div></section>
+  </section>
+</main>
+<script src="config.js"></script><script src="assets/js/admin-data.js"></script><script src="assets/js/api.js"></script><script src="assets/js/admin.js"></script>
+</body></html>
