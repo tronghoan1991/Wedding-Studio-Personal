@@ -3,6 +3,9 @@
   const $=s=>document.querySelector(s);
   const form=$('#siteForm'), root=$('#weddingPreview');
   if(!form||!root||!window.ADMIN_DATA)return;
+  if(!document.querySelector('link[data-admin-phone-preview]')){
+    const link=document.createElement('link');link.rel='stylesheet';link.href='assets/css/admin-phone-preview.css';link.dataset.adminPhonePreview='1';document.head.appendChild(link);
+  }
 
   const palettes={
     mint:{bg:'#f0f7f1',paper:'#ffffff',ink:'#24362d',muted:'#6c7f73',accent:'#527b68',accent2:'#b9d8c7'},
@@ -64,96 +67,29 @@
       </div>
     </div>`;
 
-  function normalizeText(v){
-    return String(v??'').normalize('NFC').replace(/[\u200B-\u200D\uFEFF]/g,'').replace(/[ \t]+/g,' ').replace(/ *\n */g,'\n');
-  }
-  function text(name,fallback=''){
-    const el=form.elements[name];
-    return normalizeText(el?.value||'').trim()||fallback;
-  }
+  function normalizeText(v){return String(v??'').normalize('NFC').replace(/[\u200B-\u200D\uFEFF]/g,'').replace(/[ \t]+/g,' ').replace(/ *\n */g,'\n')}
+  function text(name,fallback=''){const el=form.elements[name];return normalizeText(el?.value||'').trim()||fallback}
   function set(id,value){const el=$(id);if(el)el.textContent=normalizeText(value)}
   function dateObject(){const raw=text('eventDate','');if(!raw)return null;const d=new Date(raw);return Number.isNaN(d.getTime())?null:d}
   function fmtDate(d){return d?new Intl.DateTimeFormat('vi-VN',{weekday:'long',day:'2-digit',month:'2-digit',year:'numeric'}).format(d):'Ngày cưới của chúng mình'}
   function fmtTime(d){return d?new Intl.DateTimeFormat('vi-VN',{hour:'2-digit',minute:'2-digit',day:'2-digit',month:'2-digit',year:'numeric'}).format(d):''}
-  function allowedMediaUrl(raw){
-    const v=String(raw||'').trim();
-    if(!v)return '';
-    try{
-      if(v.startsWith('data:image/'))return v;
-      const u=new URL(v,location.href);
-      if(u.origin===location.origin||/\.supabase\.co$/i.test(u.hostname))return u.href;
-    }catch{}
-    return '';
-  }
-  function renderGallery(){
-    const grid=$('#pvGalleryGrid');if(!grid)return;
-    const urls=String(form.elements.gallery?.value||'').split(/\r?\n/).map(x=>x.trim()).filter(Boolean).slice(0,4);
-    grid.innerHTML='';
-    for(let i=0;i<4;i++){
-      const url=allowedMediaUrl(urls[i]||'');
-      const cell=document.createElement('div');cell.className='phone-gallery-cell';
-      if(url){const img=document.createElement('img');img.src=url;img.alt=`Ảnh ${i+1}`;cell.appendChild(img)}else{cell.textContent=urls[i]?'Ảnh':'+'}
-      grid.appendChild(cell);
-    }
-  }
-  function renderGiftQr(){
-    const img=$('#pvGiftQr'),ph=$('#pvGiftPlaceholder'),url=allowedMediaUrl(text('giftQrUrl',''));
-    if(url){img.src=url;img.hidden=false;ph.hidden=true}else{img.removeAttribute('src');img.hidden=true;ph.hidden=false}
-  }
+  function allowedMediaUrl(raw){const v=String(raw||'').trim();if(!v)return '';try{if(v.startsWith('data:image/'))return v;const u=new URL(v,location.href);if(u.origin===location.origin||/\.supabase\.co$/i.test(u.hostname))return u.href}catch{}return ''}
+  function renderGallery(){const grid=$('#pvGalleryGrid');if(!grid)return;const urls=String(form.elements.gallery?.value||'').split(/\r?\n/).map(x=>x.trim()).filter(Boolean).slice(0,4);grid.innerHTML='';for(let i=0;i<4;i++){const url=allowedMediaUrl(urls[i]||''),cell=document.createElement('div');cell.className='phone-gallery-cell';if(url){const img=document.createElement('img');img.src=url;img.alt=`Ảnh ${i+1}`;cell.appendChild(img)}else{cell.textContent=urls[i]?'Ảnh':'+'}grid.appendChild(cell)}}
+  function renderGiftQr(){const img=$('#pvGiftQr'),ph=$('#pvGiftPlaceholder'),url=allowedMediaUrl(text('giftQrUrl',''));if(url){img.src=url;img.hidden=false;ph.hidden=true}else{img.removeAttribute('src');img.hidden=true;ph.hidden=false}}
   function render(){
     const theme=text('theme','mint'),card=text('cardStyle','classic'),p=palettes[theme]||palettes.mint;
-    root.dataset.theme=theme;root.dataset.card=card;
-    root.style.setProperty('--pv-bg',p.bg);root.style.setProperty('--pv-paper',p.paper);root.style.setProperty('--pv-ink',p.ink);root.style.setProperty('--pv-muted',p.muted);root.style.setProperty('--pv-accent',p.accent);root.style.setProperty('--pv-accent2',p.accent2);
+    root.dataset.theme=theme;root.dataset.card=card;root.style.setProperty('--pv-bg',p.bg);root.style.setProperty('--pv-paper',p.paper);root.style.setProperty('--pv-ink',p.ink);root.style.setProperty('--pv-muted',p.muted);root.style.setProperty('--pv-accent',p.accent);root.style.setProperty('--pv-accent2',p.accent2);
     const bride=text('brideName','Cô dâu'),groom=text('groomName','Chú rể'),d=dateObject();
-    set('#pvBride',bride);set('#pvGroom',groom);set('#pvFooterNames',`${bride} & ${groom}`);
-    set('#pvInvitation',text('invitationLine','Trân trọng kính mời bạn đến chung vui trong ngày trọng đại của chúng mình.'));
-    set('#pvDate',fmtDate(d));set('#pvEventTime',fmtTime(d));
-    set('#pvStory',text('storyText','Nội dung câu chuyện sẽ xuất hiện ở đây.'));
-    set('#pvVenue',text('venueName','Địa điểm tổ chức'));set('#pvAddress',text('venueAddress','Địa chỉ sẽ hiển thị tại đây'));
-    set('#pvGalleryTitle',text('galleryTitle','Khoảnh khắc của chúng tôi'));
-    set('#pvGiftTitle',text('giftTitle','Mừng cưới'));set('#pvGiftText',text('giftText','Thông tin mừng cưới sẽ xuất hiện tại đây.'));
-    set('#pvThemeName',themeNames[theme]||theme);set('#pvCardName',cardNames[card]||card);
-    renderGallery();renderGiftQr();
-    document.querySelectorAll('.preview-swatch').forEach(b=>b.classList.toggle('active',b.dataset.theme===theme));
+    set('#pvBride',bride);set('#pvGroom',groom);set('#pvFooterNames',`${bride} & ${groom}`);set('#pvInvitation',text('invitationLine','Trân trọng kính mời bạn đến chung vui trong ngày trọng đại của chúng mình.'));set('#pvDate',fmtDate(d));set('#pvEventTime',fmtTime(d));set('#pvStory',text('storyText','Nội dung câu chuyện sẽ xuất hiện ở đây.'));set('#pvVenue',text('venueName','Địa điểm tổ chức'));set('#pvAddress',text('venueAddress','Địa chỉ sẽ hiển thị tại đây'));set('#pvGalleryTitle',text('galleryTitle','Khoảnh khắc của chúng tôi'));set('#pvGiftTitle',text('giftTitle','Mừng cưới'));set('#pvGiftText',text('giftText','Thông tin mừng cưới sẽ xuất hiện tại đây.'));set('#pvThemeName',themeNames[theme]||theme);set('#pvCardName',cardNames[card]||card);renderGallery();renderGiftQr();document.querySelectorAll('.preview-swatch').forEach(b=>b.classList.toggle('active',b.dataset.theme===theme));
   }
 
-  const palette=$('#previewPalette');
-  if(palette){
-    palette.innerHTML='';
-    ADMIN_DATA.themes.forEach(([key,label])=>{
-      const p=palettes[key]||palettes.mint,b=document.createElement('button');
-      b.type='button';b.className='preview-swatch';b.dataset.theme=key;b.title=label;b.setAttribute('aria-label',`Chọn giao diện ${label}`);
-      b.innerHTML=`<span style="--c1:${p.accent};--c2:${p.accent2};--c3:${p.bg}"></span><small>${label}</small>`;
-      b.onclick=()=>{form.elements.theme.value=key;form.elements.theme.dispatchEvent(new Event('change',{bubbles:true}));};palette.appendChild(b);
-    });
-  }
+  const palette=$('#previewPalette');if(palette){palette.innerHTML='';ADMIN_DATA.themes.forEach(([key,label])=>{const p=palettes[key]||palettes.mint,b=document.createElement('button');b.type='button';b.className='preview-swatch';b.dataset.theme=key;b.title=label;b.setAttribute('aria-label',`Chọn giao diện ${label}`);b.innerHTML=`<span style="--c1:${p.accent};--c2:${p.accent2};--c3:${p.bg}"></span><small>${label}</small>`;b.onclick=()=>{form.elements.theme.value=key;form.elements.theme.dispatchEvent(new Event('change',{bubbles:true}))};palette.appendChild(b)})}
 
-  const focusMap={
-    brideName:'pvSecCover',groomName:'pvSecCover',invitationLine:'pvSecCover',theme:'pvSecCover',cardStyle:'pvSecCover',effect:'pvSecCover',
-    eventDate:'pvSecDate',storyText:'pvSecStory',venueName:'pvSecEvent',venueAddress:'pvSecEvent',mapUrl:'pvSecEvent',
-    galleryTitle:'pvSecGallery',gallery:'pvSecGallery',giftTitle:'pvSecGift',giftText:'pvSecGift',giftQrUrl:'pvSecGift'
-  };
-  form.addEventListener('focusin',e=>{
-    const id=focusMap[e.target?.name];if(!id)return;
-    const screen=$('#previewPhoneScreen'),target=$('#'+id);if(!screen||!target)return;
-    const top=Math.max(0,target.offsetTop-10);screen.scrollTo({top,behavior:'smooth'});
-  });
+  const focusMap={brideName:'pvSecCover',groomName:'pvSecCover',invitationLine:'pvSecCover',theme:'pvSecCover',cardStyle:'pvSecCover',effect:'pvSecCover',eventDate:'pvSecDate',storyText:'pvSecStory',venueName:'pvSecEvent',venueAddress:'pvSecEvent',mapUrl:'pvSecEvent',galleryTitle:'pvSecGallery',gallery:'pvSecGallery',giftTitle:'pvSecGift',giftText:'pvSecGift',giftQrUrl:'pvSecGift'};
+  form.addEventListener('focusin',e=>{const id=focusMap[e.target?.name];if(!id)return;const screen=$('#previewPhoneScreen'),target=$('#'+id);if(!screen||!target)return;screen.scrollTo({top:Math.max(0,target.offsetTop-10),behavior:'smooth'})});
 
-  if(window.Api?.publicCall){
-    const originalCall=window.Api.publicCall.bind(window.Api);
-    window.Api.publicCall=(action,payload={},method='POST')=>{
-      if(action==='adminSaveSite'&&payload?.payload?.data){
-        payload={...payload,payload:{...payload.payload,data:{...payload.payload.data,invitationLine:text('invitationLine','')}}};
-      }
-      return originalCall(action,payload,method);
-    };
-  }
-  if(window.Api?.table){
-    const originalTable=window.Api.table.bind(window.Api);
-    window.Api.table=async(path,token,opt={})=>{const result=await originalTable(path,token,opt);if(String(path).startsWith('site_settings'))setTimeout(render,0);return result;};
-  }
+  if(window.Api?.publicCall){const originalCall=window.Api.publicCall.bind(window.Api);window.Api.publicCall=(action,payload={},method='POST')=>{if(action==='adminSaveSite'&&payload?.payload?.data){payload={...payload,payload:{...payload.payload,data:{...payload.payload.data,invitationLine:text('invitationLine','')}}}}return originalCall(action,payload,method)}}
+  if(window.Api?.table){const originalTable=window.Api.table.bind(window.Api);window.Api.table=async(path,token,opt={})=>{const result=await originalTable(path,token,opt);if(String(path).startsWith('site_settings'))setTimeout(render,0);return result}}
 
-  form.addEventListener('input',render);form.addEventListener('change',render);
-  window.AdminPreview={render};
-  render();
+  form.addEventListener('input',render);form.addEventListener('change',render);window.AdminPreview={render};render();
 })();
