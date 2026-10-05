@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' blob: data: https://*.supabase.co; media-src 'self' blob: https://*.supabase.co; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self' https://*.supabase.co; object-src 'none'; base-uri 'self'"><title>Quản trị thiệp cưới</title><link rel="stylesheet" href="assets/css/base.css"><link rel="stylesheet" href="assets/css/admin.css?v=20261005-5"><link rel="stylesheet" href="assets/css/admin-phone-preview.css?v=20261005-5"></head>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' blob: data: https://*.supabase.co; media-src 'self' blob: https://*.supabase.co; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self' https://*.supabase.co; object-src 'none'; base-uri 'self'"><title>Quản trị thiệp cưới</title><link rel="stylesheet" href="assets/css/base.css"><link rel="stylesheet" href="assets/css/admin.css?v=20261005-6"><link rel="stylesheet" href="assets/css/admin-phone-preview.css?v=20261005-6"></head>
 <body class="admin-body">
 <main class="admin-wrap">
   <section id="loginPanel" class="panel narrow"><h1>Quản trị thiệp</h1><p>Đăng nhập bằng tài khoản Supabase Auth của riêng bạn.</p><form id="loginForm" class="form-grid"><label>Email<input name="email" type="email" required></label><label>Mật khẩu<input name="password" type="password" required></label><button class="btn" type="submit">Đăng nhập</button><p id="loginStatus" class="status"></p></form></section>
@@ -23,12 +23,25 @@
           </label>
           <label class="full">Lời mời trên bìa<textarea name="invitationLine" maxlength="500" rows="3" placeholder="Ví dụ: Trân trọng kính mời bạn đến chung vui trong ngày trọng đại của chúng mình."></textarea></label>
           <label class="full">Câu chuyện<textarea name="storyText" maxlength="3000" rows="6"></textarea></label>
-          <label>Tiêu đề album<input name="galleryTitle"></label><label>Link QR mừng cưới<input name="giftQrUrl"></label>
+          <label>Tiêu đề album<input name="galleryTitle"></label>
+          <div class="admin-upload-box">
+            <label>Ảnh QR mừng cưới<input id="giftQrFile" type="file" accept="image/jpeg,image/png,image/webp"></label>
+            <input name="giftQrUrl" id="giftQrUrl" type="hidden">
+            <div class="actions"><button class="btn ghost" id="uploadGiftQrBtn" type="button">Upload ảnh QR</button></div>
+            <img id="giftQrAdminPreview" class="admin-qr-preview" alt="QR mừng cưới" hidden>
+            <small id="giftQrUploadStatus" class="status"></small>
+          </div>
           <label>Tiêu đề mừng cưới<input name="giftTitle"></label><label>Thông tin mừng cưới<input name="giftText"></label>
           <label>Mật khẩu trang (để trống = tắt)<input name="pagePassword" type="password"></label><label>Mật khẩu album<input name="albumPassword" type="password"></label>
           <label>Mã upload ảnh qua QR<input name="photoUploadCode"></label><label><input type="checkbox" name="isPublic"> Cho khách xem</label>
           <fieldset class="full"><legend>Ngôn ngữ</legend><label><input type="checkbox" name="lang_vi" value="vi"> Việt</label> <label><input type="checkbox" name="lang_en" value="en"> English</label> <label><input type="checkbox" name="lang_zh" value="zh"> 中文</label> <label><input type="checkbox" name="lang_lo" value="lo"> ລາວ</label> <label><input type="checkbox" name="lang_th" value="th"> ไทย</label> <label><input type="checkbox" name="lang_fr" value="fr"> Français</label></fieldset>
-          <label class="full">Album ảnh (mỗi dòng 1 URL)<textarea name="gallery" rows="8"></textarea></label>
+          <div class="full admin-upload-box">
+            <label>Album ảnh chất lượng cao<input id="albumFiles" type="file" accept="image/jpeg,image/png,image/webp" multiple></label>
+            <div class="actions"><button class="btn ghost" id="uploadAlbumBtn" type="button">Upload ảnh album</button><small>JPG/PNG/WebP · tối đa 20 MB/ảnh · tối đa 30 ảnh/lần</small></div>
+            <small id="albumUploadStatus" class="status"></small>
+            <div id="albumUploadPreview" class="admin-media-grid"></div>
+            <textarea name="gallery" id="galleryUrls" hidden></textarea>
+          </div>
           <button class="btn" type="submit">Lưu nội dung</button><p id="siteStatus" class="status"></p>
         </form>
 
@@ -51,5 +64,5 @@
     <section id="tab-backup" class="tab"><div class="panel"><h2>Sao lưu</h2><p>Xuất dữ liệu nội dung/khách/RSVP/lời chúc ra JSON để lưu offline.</p><div class="actions"><button class="btn" id="backupBtn">Tải backup JSON</button><label class="btn ghost">Khôi phục JSON<input id="restoreFile" type="file" accept="application/json" hidden></label></div><p id="backupStatus" class="status"></p></div></section>
   </section>
 </main>
-<script src="config.js"></script><script src="assets/js/admin-data.js"></script><script src="assets/js/api.js"></script><script src="assets/js/admin-preview.js?v=20261005-5"></script><script src="assets/js/admin.js?v=20261005-5"></script><script src="assets/js/music-upload.js?v=20261005-5"></script>
+<script src="config.js"></script><script src="assets/js/admin-data.js"></script><script src="assets/js/api.js"></script><script src="assets/js/admin-preview.js?v=20261005-6"></script><script src="assets/js/admin.js?v=20261005-6"></script><script src="assets/js/music-upload.js?v=20261005-6"></script><script src="assets/js/image-upload.js?v=20261005-6"></script>
 </body></html>
