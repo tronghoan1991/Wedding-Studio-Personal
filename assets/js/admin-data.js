@@ -3,7 +3,12 @@ window.ADMIN_DATA={themes:[['mint','Bạc hà'],['lavender','Oải hương'],['s
 (()=>{
   'use strict';
   const $=s=>document.querySelector(s);
-  const commonUrl=()=>`${location.origin}${location.pathname.replace(/admin\.html$/,'')}`;
+  const rootUrl=()=>`${location.origin}${location.pathname.replace(/admin\.html$/,'')}`;
+  const commonUrl=()=>{
+    const primary=String(window.APP_CONFIG?.SITE_ID||'');
+    const active=String(window.Api?.siteId?.()||new URLSearchParams(location.search).get('site')||primary);
+    return active&&active!==primary?`${rootUrl()}?site=${encodeURIComponent(active)}`:rootUrl();
+  };
   const val=name=>String($('#siteForm')?.elements?.[name]?.value||'').trim();
   function couple(){const b=val('brideName'),g=val('groomName');return b&&g?`${b} & ${g}`:(b||g||'chúng mình')}
   function when(){const raw=val('eventDate');if(!raw)return '';const d=new Date(raw);if(Number.isNaN(d.getTime()))return '';return new Intl.DateTimeFormat('vi-VN',{hour:'2-digit',minute:'2-digit',day:'2-digit',month:'2-digit',year:'numeric'}).format(d)}
@@ -11,14 +16,14 @@ window.ADMIN_DATA={themes:[['mint','Bạc hà'],['lavender','Oải hương'],['s
   function fullText(){return `${message()}\n\n💌 Xem thiệp mời tại:\n${commonUrl()}`}
   async function copy(text){try{await navigator.clipboard.writeText(text);return true}catch{window.prompt('Sao chép nội dung sau:',text);return false}}
   function setStatus(text){const s=$('#commonShareStatus');if(s){s.textContent=text;setTimeout(()=>{if(s.textContent===text)s.textContent=''},2200)}}
-  async function share(){const data={title:`Thiệp cưới ${couple()}`,text:message(),url:commonUrl()};if(navigator.share){try{await navigator.share(data);return}catch(e){if(e?.name==='AbortError')return}}await copy(fullText());setStatus('Đã sao chép lời mời + link chung.')}
+  async function share(){const data={title:`Thiệp cưới ${couple()}`,text:message(),url:commonUrl()};if(navigator.share){try{await navigator.share(data);return}catch(e){if(e?.name==='AbortError')return}}await copy(fullText());setStatus('Đã sao chép lời mời + đúng link thiệp đang chỉnh.')}
   function init(){
     const guestTab=document.querySelector('.tabs button[data-tab="guests"]');if(guestTab)guestTab.remove();
     const guestSection=$('#tab-guests');if(guestSection)guestSection.hidden=true;
     const head=document.querySelector('.admin-head .actions');if(!head||$('#shareCommonBtn'))return;
     const shareBtn=document.createElement('button');shareBtn.type='button';shareBtn.id='shareCommonBtn';shareBtn.className='btn';shareBtn.textContent='Chia sẻ thiệp';shareBtn.onclick=share;
-    const copyBtn=document.createElement('button');copyBtn.type='button';copyBtn.id='copyCommonBtn';copyBtn.className='btn ghost';copyBtn.textContent='Copy lời + link';copyBtn.onclick=async()=>{await copy(fullText());setStatus('Đã copy lời mời + link chung.')};
-    const linkBtn=document.createElement('button');linkBtn.type='button';linkBtn.id='copyCommonLinkBtn';linkBtn.className='btn ghost';linkBtn.textContent='Copy link';linkBtn.onclick=async()=>{await copy(commonUrl());setStatus('Đã copy link chung.')};
+    const copyBtn=document.createElement('button');copyBtn.type='button';copyBtn.id='copyCommonBtn';copyBtn.className='btn ghost';copyBtn.textContent='Copy lời + link';copyBtn.onclick=async()=>{await copy(fullText());setStatus('Đã copy lời mời + đúng link thiệp đang chỉnh.')};
+    const linkBtn=document.createElement('button');linkBtn.type='button';linkBtn.id='copyCommonLinkBtn';linkBtn.className='btn ghost';linkBtn.textContent='Copy link';linkBtn.onclick=async()=>{await copy(commonUrl());setStatus('Đã copy đúng link thiệp đang chỉnh.')};
     const status=document.createElement('small');status.id='commonShareStatus';status.className='status';status.style.display='block';status.style.width='100%';
     head.prepend(shareBtn,copyBtn,linkBtn);head.append(status);
   }
