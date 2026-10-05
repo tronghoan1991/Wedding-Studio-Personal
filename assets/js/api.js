@@ -1,5 +1,5 @@
 window.Api=(()=>{
-  const cfg=window.APP_CONFIG||{}; const base=String(cfg.SUPABASE_URL||'').replace(/\/$/,''); const key=cfg.SUPABASE_ANON_KEY||''; const fn=cfg.API_FUNCTION||'wedding-api';
+  const cfg=window.APP_CONFIG||{}; const base=String(cfg.SUPABASE_URL||'').replace(/\/$/,''); const key=cfg.SUPABASE_PUBLISHABLE_KEY||''; const fn=cfg.API_FUNCTION||'wedding-api';
   const ready=()=>/^https:\/\/.+\.supabase\.co$/i.test(base)&&key&&!key.startsWith('YOUR_');
   async function jsonFetch(url,opt={}){const r=await fetch(url,opt);let d=null;try{d=await r.json()}catch{d={error:await r.text()}}if(!r.ok)throw new Error(d?.error||d?.message||`HTTP ${r.status}`);return d}
   function h(token){const out={apikey:key,'Content-Type':'application/json'};if(token)out.Authorization=`Bearer ${token}`;return out}
