@@ -8,7 +8,11 @@ window.Api=(()=>{
   let activeSiteId=uuidRe.test(urlSite)?urlSite:String(rawCfg.SITE_ID||'');
   let refreshPromise=null;
 
-  const cfg=new Proxy(rawCfg,{get(target,prop){if(prop==='SITE_ID')return activeSiteId;return target[prop]}});
+  // APP_CONFIG is Object.freeze(...). Never proxy a frozen non-configurable SITE_ID
+  // with a different value: that violates the JS Proxy invariants. Use a fresh
+  // config object with a live getter instead.
+  const cfg={...rawCfg};
+  Object.defineProperty(cfg,'SITE_ID',{enumerable:true,configurable:true,get(){return activeSiteId}});
   const ready=()=>/^https:\/\/.+\.supabase\.co$/i.test(base)&&key&&!key.startsWith('YOUR_')&&uuidRe.test(activeSiteId);
   const siteId=()=>activeSiteId;
   function setSiteId(id){const v=String(id||'').trim();if(!uuidRe.test(v))throw new Error('SITE_ID không hợp lệ');activeSiteId=v;return activeSiteId}
