@@ -4,11 +4,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; img-src 'self' data: blob: https://*.supabase.co; media-src 'self' blob: https://*.supabase.co; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self' https://*.supabase.co; form-action 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; img-src 'self' data: blob: https://*.supabase.co; media-src 'self' blob: https://*.supabase.co; font-src 'self' https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self'; connect-src 'self' https://*.supabase.co; form-action 'self'">
   <meta name="description" content="Thiệp cưới cá nhân">
   <title>Thiệp cưới</title>
-  <link rel="stylesheet" href="assets/css/base.css?v=20261005-6">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Great+Vibes&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/base.css?v=20261005-9">
   <link rel="stylesheet" href="assets/css/themes.css">
+  <link rel="stylesheet" href="assets/css/premium-cover.css?v=20261005-9">
 </head>
 <body data-theme="mint" data-card="classic">
   <div id="lockScreen" class="lock-screen" hidden>
@@ -17,7 +21,26 @@
     </form>
   </div>
   <main id="site" hidden>
-    <section class="cover card-shell" id="cover"><div class="fx-layer" id="fxLayer" aria-hidden="true"></div><div class="cover-inner"><div class="seal" aria-hidden="true">♥</div><p class="eyebrow" data-i18n="invite">TRÂN TRỌNG KÍNH MỜI</p><p id="guestHonorific" class="guest-honorific"></p><h1><span id="brideName">Cô dâu</span><i>&amp;</i><span id="groomName">Chú rể</span></h1><p id="guestMessage" class="lead"></p><button class="btn btn-light" id="openCard" type="button" data-i18n="openCard">Mở thiệp</button></div></section>
+    <section class="premium-cover" id="cover">
+      <div class="fx-layer" id="fxLayer" aria-hidden="true"></div>
+      <div class="cover-orbit" aria-hidden="true"></div>
+      <article class="cover-paper">
+        <div class="cover-photo-stage" aria-label="Ảnh cưới trên bìa">
+          <figure class="cover-photo cover-photo-main is-empty" id="coverFigureMain"><img id="coverPhotoMain" alt="Ảnh cưới chính" hidden></figure>
+          <figure class="cover-photo cover-photo-left is-empty" id="coverFigureLeft"><img id="coverPhotoLeft" alt="Ảnh cưới" hidden></figure>
+          <figure class="cover-photo cover-photo-right is-empty" id="coverFigureRight"><img id="coverPhotoRight" alt="Ảnh cưới" hidden></figure>
+          <span class="cover-flower cover-flower-a" aria-hidden="true"></span><span class="cover-flower cover-flower-b" aria-hidden="true"></span>
+        </div>
+        <div class="cover-copy">
+          <p class="cover-kicker" data-i18n="invite">TRÂN TRỌNG KÍNH MỜI</p>
+          <p id="guestHonorific" class="cover-guest"></p>
+          <h1 class="cover-names"><span id="brideName">Cô dâu</span><i>&amp;</i><span id="groomName">Chú rể</span></h1>
+          <p id="coverDate" class="cover-date-line">SAVE THE DATE</p>
+          <p id="guestMessage" class="cover-message"></p>
+          <button class="cover-open-btn" id="openCard" type="button"><span id="coverWax" class="cover-wax">♥</span><span>Chạm để mở thiệp</span><small>Wedding invitation</small></button>
+        </div>
+      </article>
+    </section>
     <div id="content" class="content" hidden>
       <nav class="nav"><a href="#story" data-i18n="story">Câu chuyện</a><a href="#event" data-i18n="event">Hôn lễ</a><a href="#gallery" data-i18n="gallery">Album</a><a href="#rsvp" data-i18n="rsvp">Xác nhận</a><a href="#wishes" data-i18n="wishes">Lời chúc</a><select id="langSelect" aria-label="Ngôn ngữ"></select></nav>
       <section class="hero section" id="story"><p class="eyebrow" data-i18n="saveDate">SAVE THE DATE</p><h2 id="dateText"></h2><p id="lunarText" class="muted"></p><div id="countdown" class="countdown"><div><strong id="days">0</strong><span data-i18n="days">Ngày</span></div><div><strong id="hours">0</strong><span data-i18n="hours">Giờ</span></div><div><strong id="minutes">0</strong><span data-i18n="minutes">Phút</span></div><div><strong id="seconds">0</strong><span data-i18n="seconds">Giây</span></div></div><p id="storyText" class="story-text"></p></section>
@@ -31,9 +54,6 @@
     </div>
   </main>
   <button id="musicBtn" class="music-btn" type="button" hidden aria-label="Bật/tắt nhạc">♫</button><audio id="music" loop preload="none"></audio>
-  <dialog id="lightbox" class="lightbox-dialog">
-    <div class="lightbox-toolbar"><button id="lightboxZoomOut" type="button" aria-label="Thu nhỏ">−</button><span id="lightboxZoomLabel">100%</span><button id="lightboxZoomIn" type="button" aria-label="Phóng to">+</button><button id="lightboxReset" type="button">Vừa màn hình</button><button id="lightboxClose" class="close" type="button" aria-label="Đóng">×</button></div>
-    <div id="lightboxStage" class="lightbox-stage"><img id="lightboxImg" alt="Ảnh cưới" title="Bấm vào ảnh để phóng to / thu nhỏ"></div>
-  </dialog>
-  <script src="config.js"></script><script src="assets/js/i18n.js"></script><script src="assets/js/lunar.js"></script><script src="assets/js/effects.js"></script><script src="assets/js/api.js"></script><script src="assets/js/app.js?v=20261005-6"></script>
+  <dialog id="lightbox" class="lightbox-dialog"><div class="lightbox-toolbar"><button id="lightboxZoomOut" type="button" aria-label="Thu nhỏ">−</button><span id="lightboxZoomLabel">100%</span><button id="lightboxZoomIn" type="button" aria-label="Phóng to">+</button><button id="lightboxReset" type="button">Vừa màn hình</button><button id="lightboxClose" class="close" type="button" aria-label="Đóng">×</button></div><div id="lightboxStage" class="lightbox-stage"><img id="lightboxImg" alt="Ảnh cưới" title="Bấm vào ảnh để phóng to / thu nhỏ"></div></dialog>
+  <script src="config.js"></script><script src="assets/js/i18n.js"></script><script src="assets/js/lunar.js"></script><script src="assets/js/effects.js"></script><script src="assets/js/api.js?v=20261005-9"></script><script src="assets/js/app.js?v=20261005-9"></script>
 </body></html>
