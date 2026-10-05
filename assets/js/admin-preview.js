@@ -65,6 +65,9 @@
       <div id="pvFxLayer" class="phone-preview-fx-layer" aria-hidden="true"></div>
     </div>`;
 
+  const fxLayer=$('#pvFxLayer');
+  if(fxLayer)Object.assign(fxLayer.style,{position:'absolute',inset:'10px',zIndex:'6',pointerEvents:'none',overflow:'hidden',borderRadius:'26px'});
+
   function normalizeText(v){return String(v??'').normalize('NFC').replace(/[\u200B-\u200D\uFEFF]/g,'').replace(/[ \t]+/g,' ').replace(/ *\n */g,'\n')}
   function text(name,fallback=''){const el=form.elements[name];return normalizeText(el?.value||'').trim()||fallback}
   function set(id,value){const el=$(id);if(el)el.textContent=normalizeText(value)}
@@ -72,21 +75,19 @@
   function fmtDate(d){return d?new Intl.DateTimeFormat('vi-VN',{weekday:'long',day:'2-digit',month:'2-digit',year:'numeric'}).format(d):'Ngày cưới của chúng mình'}
   function fmtTime(d){return d?new Intl.DateTimeFormat('vi-VN',{hour:'2-digit',minute:'2-digit',day:'2-digit',month:'2-digit',year:'numeric'}).format(d):''}
   function allowedMediaUrl(raw){const v=String(raw||'').trim();if(!v)return '';try{if(v.startsWith('data:image/'))return v;const u=new URL(v,location.href);if(u.origin===location.origin||/\.supabase\.co$/i.test(u.hostname))return u.href}catch{}return ''}
-
   function renderGallery(){const grid=$('#pvGalleryGrid');if(!grid)return;const urls=String(form.elements.gallery?.value||'').split(/\r?\n/).map(x=>x.trim()).filter(Boolean).slice(0,4);grid.innerHTML='';for(let i=0;i<4;i++){const url=allowedMediaUrl(urls[i]||''),cell=document.createElement('div');cell.className='phone-gallery-cell';if(url){const img=document.createElement('img');img.src=url;img.alt=`Ảnh ${i+1}`;cell.appendChild(img)}else cell.textContent=urls[i]?'Ảnh':'+';grid.appendChild(cell)}}
   function renderGiftQr(){const img=$('#pvGiftQr'),ph=$('#pvGiftPlaceholder'),url=allowedMediaUrl(text('giftQrUrl',''));if(url){img.src=url;img.hidden=false;ph.hidden=true}else{img.removeAttribute('src');img.hidden=true;ph.hidden=false}}
 
-  function stopEffect(){if(fxTimer)clearInterval(fxTimer);fxTimer=null;const layer=$('#pvFxLayer');if(layer)layer.replaceChildren()}
+  function stopEffect(){if(fxTimer)clearInterval(fxTimer);fxTimer=null;if(fxLayer)fxLayer.replaceChildren()}
   function startEffect(type){
     stopEffect();lastEffect=type;
-    if(!type||type==='none')return;
-    const layer=$('#pvFxLayer');if(!layer)return;
+    if(!type||type==='none'||!fxLayer)return;
     const chars={hearts:['♥','♡'],petals:['✿','❀','❁'],snow:['❄','•'],glitter:['✦','✧','⋆'],stars:['★','✦','☆']}[type]||['✦'];
-    const spawn=()=>{const e=document.createElement('span');e.className='preview-fx';e.textContent=chars[Math.floor(Math.random()*chars.length)];e.style.left=(4+Math.random()*92)+'%';e.style.fontSize=(12+Math.random()*17)+'px';e.style.setProperty('--pv-drift',(-50+Math.random()*100)+'px');e.style.animationDuration=(3.8+Math.random()*4.2)+'s';layer.appendChild(e);setTimeout(()=>e.remove(),8500)};
-    for(let i=0;i<7;i++)setTimeout(spawn,i*90);
-    fxTimer=setInterval(spawn,330);
+    const spawn=()=>{const e=document.createElement('span');e.className='fx preview-fx';e.textContent=chars[Math.floor(Math.random()*chars.length)];e.style.left=(4+Math.random()*92)+'%';e.style.fontSize=(12+Math.random()*17)+'px';e.style.color='var(--pv-accent)';e.style.textShadow='0 1px 4px rgba(0,0,0,.12)';e.style.setProperty('--drift',(-50+Math.random()*100)+'px');e.style.animationDuration=(3.8+Math.random()*4.2)+'s';fxLayer.appendChild(e);setTimeout(()=>e.remove(),8500)};
+    for(let i=0;i<8;i++)setTimeout(spawn,i*80);
+    fxTimer=setInterval(spawn,300);
   }
-  function replayCard(card){if(card===lastCard)return;lastCard=card;const el=root.querySelector('.phone-cover-card');if(!el?.animate)return;el.animate([{opacity:.25,transform:'scale(.965)'},{opacity:1,transform:'scale(1)'}],{duration:420,easing:'ease-out'});}
+  function replayCard(card){if(card===lastCard)return;lastCard=card;const el=root.querySelector('.phone-cover-card');if(!el?.animate)return;el.animate([{opacity:.3,transform:'scale(.96)'},{opacity:1,transform:'scale(1)'}],{duration:450,easing:'ease-out'});}
 
   function render(){
     const theme=text('theme','mint'),card=text('cardStyle','classic'),effect=text('effect','none'),p=palettes[theme]||palettes.mint;
@@ -101,5 +102,6 @@
   const focusMap={brideName:'pvSecCover',groomName:'pvSecCover',invitationLine:'pvSecCover',theme:'pvSecCover',cardStyle:'pvSecCover',effect:'pvSecCover',eventDate:'pvSecDate',storyText:'pvSecStory',venueName:'pvSecEvent',venueAddress:'pvSecEvent',mapUrl:'pvSecEvent',galleryTitle:'pvSecGallery',gallery:'pvSecGallery',giftTitle:'pvSecGift',giftText:'pvSecGift',giftQrUrl:'pvSecGift'};
   form.addEventListener('focusin',e=>{const id=focusMap[e.target?.name];if(!id)return;const screen=$('#previewPhoneScreen'),target=$('#'+id);if(!screen||!target)return;screen.scrollTo({top:Math.max(0,target.offsetTop-10),behavior:'smooth'})});
   form.addEventListener('input',render);form.addEventListener('change',render);
-  window.AdminPreview={render,startEffect,stopEffect};render();
+  window.AdminPreview={render,startEffect,stopEffect};
+  render();setTimeout(render,0);setTimeout(render,350);setTimeout(render,1200);
 })();
