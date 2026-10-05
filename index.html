@@ -4,18 +4,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; img-src 'self' data: blob: https://*.supabase.co; media-src 'self' blob: https://*.supabase.co; font-src 'self' https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self'; connect-src 'self' https://*.supabase.co; form-action 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; img-src 'self' data: blob: https://*.supabase.co; media-src 'self' blob: https://*.supabase.co; font-src 'self' https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self'; connect-src 'self' https://*.supabase.co https://api.vietqr.io; form-action 'self'">
   <meta name="description" content="Thiệp cưới cá nhân">
   <title>Thiệp cưới</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Great+Vibes&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/base.css?v=20261005-14">
-  <link rel="stylesheet" href="assets/css/themes.css?v=20261005-14">
-  <link rel="stylesheet" href="assets/css/premium-cover.css?v=20261005-14">
-  <link rel="stylesheet" href="assets/css/cover-photo-editor.css?v=20261005-14">
-  <link rel="stylesheet" href="assets/css/polish.css?v=20261005-14">
-  <link rel="stylesheet" href="assets/css/inner-luxe.css?v=20261005-14">
+  <link rel="stylesheet" href="assets/css/base.css?v=20261005-15">
+  <link rel="stylesheet" href="assets/css/themes.css?v=20261005-15">
+  <link rel="stylesheet" href="assets/css/premium-cover.css?v=20261005-15">
+  <link rel="stylesheet" href="assets/css/cover-photo-editor.css?v=20261005-15">
+  <link rel="stylesheet" href="assets/css/polish.css?v=20261005-15">
+  <link rel="stylesheet" href="assets/css/inner-luxe.css?v=20261005-15">
 </head>
 <body data-theme="mint" data-card="classic">
   <div id="lockScreen" class="lock-screen" hidden>
@@ -29,9 +29,9 @@
       <div class="cover-orbit" aria-hidden="true"></div>
       <article class="cover-paper">
         <div class="cover-photo-stage" aria-label="Ảnh cưới trên bìa">
-          <figure class="cover-photo cover-photo-main is-empty" id="coverFigureMain"><img id="coverPhotoMain" alt="Ảnh cưới chính" hidden></figure>
-          <figure class="cover-photo cover-photo-left is-empty" id="coverFigureLeft"><img id="coverPhotoLeft" alt="Ảnh cưới" hidden></figure>
-          <figure class="cover-photo cover-photo-right is-empty" id="coverFigureRight"><img id="coverPhotoRight" alt="Ảnh cưới" hidden></figure>
+          <figure class="cover-photo cover-photo-main is-empty" id="coverFigureMain"><img id="coverPhotoMain" alt="Ảnh cưới chính" decoding="async" hidden></figure>
+          <figure class="cover-photo cover-photo-left is-empty" id="coverFigureLeft"><img id="coverPhotoLeft" alt="Ảnh cưới" decoding="async" hidden></figure>
+          <figure class="cover-photo cover-photo-right is-empty" id="coverFigureRight"><img id="coverPhotoRight" alt="Ảnh cưới" decoding="async" hidden></figure>
           <span class="cover-flower cover-flower-a" aria-hidden="true"></span><span class="cover-flower cover-flower-b" aria-hidden="true"></span>
         </div>
         <div class="cover-copy">
@@ -52,12 +52,12 @@
       <section class="section" id="rsvp"><div class="panel"><p class="eyebrow" data-i18n="rsvp">XÁC NHẬN THAM DỰ</p><form id="rsvpForm" class="form-grid"><label><span data-i18n="name">Tên</span><input name="name" id="rsvpName" maxlength="120" required></label><fieldset><legend data-i18n="attendQuestion">Bạn có thể tham dự?</legend><label><input type="radio" name="attend" value="yes" required> <span data-i18n="yes">Có</span></label><label><input type="radio" name="attend" value="no" required> <span data-i18n="no">Không</span></label></fieldset><label><span data-i18n="guestCount">Số người</span><input name="guests" type="number" min="1" max="20" value="1"></label><label class="full"><span data-i18n="note">Lời nhắn</span><textarea name="note" maxlength="500"></textarea></label><button class="btn" type="submit" data-i18n="send">Gửi xác nhận</button><p id="rsvpStatus" class="status"></p></form></div></section>
       <section class="section" id="wishes"><div class="panel"><p class="eyebrow" data-i18n="wishes">LỜI CHÚC</p><form id="wishForm" class="form-grid compact"><label><span data-i18n="name">Tên</span><input name="name" maxlength="120" required></label><label class="full"><span data-i18n="wish">Lời chúc</span><textarea name="message" maxlength="800" required></textarea></label><button class="btn" type="submit" data-i18n="sendWish">Gửi lời chúc</button><p id="wishStatus" class="status"></p></form><div id="wishList" class="wish-list"></div></div></section>
       <section class="section" id="photos"><div class="panel"><p class="eyebrow" data-i18n="sharePhotos">CHIA SẺ ẢNH</p><p data-i18n="sharePhotosHelp">Khách có thể gửi ảnh kỷ niệm cho cô dâu chú rể.</p><a class="btn" id="uploadLink" data-i18n="uploadPhotos">Gửi ảnh</a><img id="uploadQr" class="qr" alt="QR gửi ảnh" hidden></div></section>
-      <section class="section gift" id="gift" hidden><div class="panel"><p class="eyebrow" data-i18n="gift">MỪNG CƯỚI</p><h2 id="giftTitle"></h2><p id="giftText"></p><img id="giftQr" class="qr" alt="QR mừng cưới" hidden></div></section>
+      <section class="section gift" id="gift" hidden><div class="panel"><p class="eyebrow" data-i18n="gift">MỪNG CƯỚI</p><h2 id="giftTitle"></h2><p id="giftText"></p><img id="giftQr" class="qr" alt="QR mừng cưới" loading="lazy" decoding="async" hidden></div></section>
       <section class="section thank-you" id="thankYou"><div class="panel thank-you-card"><p class="eyebrow">LỜI CẢM ƠN</p><h2>Cảm ơn</h2><p id="thankYouText">Cảm ơn bạn đã dành thời gian tới chung vui và lưu giữ cùng chúng mình một kỷ niệm thật đẹp.</p></div></section>
-      <footer class="footer"><strong id="footerNames"></strong><p data-i18n="privacyNote">Trang này không sử dụng tracker quảng cáo. Dữ liệu RSVP/ảnh chỉ đi tới backend do chủ thiệp kiểm soát.</p></footer>
+      <footer class="footer"><strong id="footerNames"></strong></footer>
     </div>
   </main>
   <button id="musicBtn" class="music-btn" type="button" hidden aria-label="Bật/tắt nhạc">♫</button><audio id="music" loop preload="auto" playsinline></audio>
   <dialog id="lightbox" class="lightbox-dialog"><div class="lightbox-toolbar"><button id="lightboxZoomOut" type="button" aria-label="Thu nhỏ">−</button><span id="lightboxZoomLabel">100%</span><button id="lightboxZoomIn" type="button" aria-label="Phóng to">+</button><button id="lightboxReset" type="button">Vừa màn hình</button><button id="lightboxClose" class="close" type="button" aria-label="Đóng">×</button></div><div id="lightboxStage" class="lightbox-stage"><img id="lightboxImg" alt="Ảnh cưới" title="Bấm vào ảnh để phóng to / thu nhỏ"></div></dialog>
-  <script src="config.js"></script><script src="assets/js/i18n.js"></script><script src="assets/js/lunar.js"></script><script src="assets/js/effects.js"></script><script src="assets/js/api.js?v=20261005-14"></script><script src="assets/js/app.js?v=20261005-14"></script>
+  <script src="config.js"></script><script src="assets/js/i18n.js"></script><script src="assets/js/lunar.js"></script><script src="assets/js/effects.js"></script><script src="assets/js/api.js?v=20261005-15"></script><script src="assets/js/app.js?v=20261005-15"></script><script src="assets/js/gift-action.js?v=20261005-15"></script>
 </body></html>
