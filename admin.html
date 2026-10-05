@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' blob: data: https://*.supabase.co; media-src 'self' blob: https://*.supabase.co; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self' https://*.supabase.co; object-src 'none'; base-uri 'self'"><title>Quản trị thiệp cưới</title><link rel="stylesheet" href="assets/css/base.css"><link rel="stylesheet" href="assets/css/admin.css"></head>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' blob: data: https://*.supabase.co; media-src 'self' blob: https://*.supabase.co; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self' https://*.supabase.co; object-src 'none'; base-uri 'self'"><title>Quản trị thiệp cưới</title><link rel="stylesheet" href="assets/css/base.css"><link rel="stylesheet" href="assets/css/admin.css?v=20261005-4"><link rel="stylesheet" href="assets/css/admin-phone-preview.css?v=20261005-4"></head>
 <body class="admin-body">
 <main class="admin-wrap">
   <section id="loginPanel" class="panel narrow"><h1>Quản trị thiệp</h1><p>Đăng nhập bằng tài khoản Supabase Auth của riêng bạn.</p><form id="loginForm" class="form-grid"><label>Email<input name="email" type="email" required></label><label>Mật khẩu<input name="password" type="password" required></label><button class="btn" type="submit">Đăng nhập</button><p id="loginStatus" class="status"></p></form></section>
@@ -34,25 +34,13 @@
 
         <aside class="live-preview-panel" aria-label="Xem trước thiệp">
           <div class="preview-head">
-            <div><h2>Xem trước trực tiếp</h2><p>Không cần bấm Lưu để xem thay đổi.</p></div>
+            <div><h2>Xem trước trên điện thoại</h2><p>Thay đổi ngay khi bạn nhập hoặc chọn.</p></div>
             <div class="preview-badges"><span id="pvThemeName" class="preview-badge"></span><span id="pvCardName" class="preview-badge"></span></div>
           </div>
-          <div id="weddingPreview" class="wedding-preview" data-theme="mint" data-card="classic">
-            <div class="preview-card">
-              <span class="preview-kicker">TRÂN TRỌNG KÍNH MỜI</span>
-              <h3><span id="pvBride">Cô dâu</span><i>&amp;</i><span id="pvGroom">Chú rể</span></h3>
-              <p id="pvInvitation" class="preview-invitation">Trân trọng kính mời bạn đến chung vui trong ngày trọng đại của chúng mình.</p>
-              <div class="preview-divider"></div>
-              <strong id="pvDate" class="preview-date">Ngày cưới của chúng mình</strong>
-              <span id="pvVenue" class="preview-venue">Địa điểm tổ chức</span>
-              <small id="pvAddress" class="preview-address">Địa chỉ sẽ hiển thị tại đây</small>
-              <p id="pvStory" class="preview-story"></p>
-              <div class="preview-seal">♥</div>
-            </div>
-          </div>
+          <div id="weddingPreview" class="wedding-preview" data-theme="mint" data-card="classic"></div>
           <div class="preview-palette-title">Chọn màu nhanh</div>
           <div id="previewPalette" class="preview-palette"></div>
-          <p class="preview-help">Khung này chỉ là bản xem nhanh để soạn chữ và chọn màu. Sau khi ưng ý, bấm <b>Lưu nội dung</b> rồi dùng <b>Xem thiệp thật</b> để kiểm tra toàn bộ hiệu ứng, nhạc, RSVP và album.</p>
+          <p class="preview-help">Màn hình điện thoại có thể cuộn. Chọn các trường bên trái để preview tự chuyển đến phần tương ứng. Hiệu ứng Tim/Hoa/Tuyết/Kim tuyến/Sao cũng chạy trực tiếp trong preview.</p>
         </aside>
       </div>
     </section>
@@ -63,5 +51,5 @@
     <section id="tab-backup" class="tab"><div class="panel"><h2>Sao lưu</h2><p>Xuất dữ liệu nội dung/khách/RSVP/lời chúc ra JSON để lưu offline.</p><div class="actions"><button class="btn" id="backupBtn">Tải backup JSON</button><label class="btn ghost">Khôi phục JSON<input id="restoreFile" type="file" accept="application/json" hidden></label></div><p id="backupStatus" class="status"></p></div></section>
   </section>
 </main>
-<script src="config.js"></script><script src="assets/js/admin-data.js"></script><script src="assets/js/api.js"></script><script src="assets/js/admin-preview.js"></script><script src="assets/js/admin.js"></script><script src="assets/js/music-upload.js"></script>
+<script src="config.js"></script><script src="assets/js/admin-data.js"></script><script src="assets/js/api.js"></script><script src="assets/js/admin-preview.js?v=20261005-4"></script><script src="assets/js/admin.js?v=20261005-4"></script><script src="assets/js/music-upload.js?v=20261005-4"></script>
 </body></html>
