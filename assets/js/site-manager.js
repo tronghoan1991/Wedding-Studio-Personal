@@ -41,7 +41,10 @@
       const picker=$('#sitePicker'),active=currentId();picker.innerHTML='';
       for(const row of rows){const o=document.createElement('option');o.value=row.id;o.textContent=`${labelFor(row)}${row.is_public?'':' · chưa công khai'}`;picker.appendChild(o)}
       if(rows.some(x=>x.id===active))picker.value=active;else if(rows[0])picker.value=rows[0].id;
-      const refreshLink=()=>{$('#activeSiteLink').textContent=publicUrl(picker.value)};refreshLink();
+      const refreshLink=()=>{
+        const link=publicUrl(picker.value);$('#activeSiteLink').textContent=link;
+        const headerView=$('.admin-head a[href^="index.html"]');if(headerView)headerView.href=link;
+      };refreshLink();
       picker.onchange=()=>{location.href=`admin.html?site=${encodeURIComponent(picker.value)}`};
       $('#openSiteBtn').onclick=()=>window.open(publicUrl(picker.value),'_blank','noopener');
       $('#copySiteBtn').onclick=async()=>{await copy(publicUrl(picker.value));status.textContent='Đã copy link thiệp.';setTimeout(()=>status.textContent='',1500)};
