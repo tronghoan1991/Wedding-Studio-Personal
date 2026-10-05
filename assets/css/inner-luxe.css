@@ -1,0 +1,103 @@
+/* Rich inner-page styling. Loaded after the base/polish styles so it only changes presentation. */
+
+/* Admin cover preview: the generic helper line is unnecessary. Keep real guest honorifics on the public invite. */
+.premium-cover.is-preview .cover-guest{display:none!important}
+
+/* The section eyebrow already says MỪNG CƯỚI, so avoid printing the same heading twice. */
+#giftTitle,#pvGiftTitle{display:none!important}
+
+/* ---------- Public invitation: richer paper / floral atmosphere ---------- */
+.content{
+  --wash-a:color-mix(in srgb,var(--accent2) 34%,var(--bg));
+  --wash-b:color-mix(in srgb,var(--accent) 15%,var(--paper));
+  background:
+    radial-gradient(ellipse at 8% 5%,color-mix(in srgb,var(--accent2) 48%,transparent),transparent 34%),
+    radial-gradient(ellipse at 92% 20%,color-mix(in srgb,var(--accent) 22%,transparent),transparent 30%),
+    radial-gradient(ellipse at 18% 82%,color-mix(in srgb,var(--accent) 14%,transparent),transparent 32%),
+    linear-gradient(180deg,var(--wash-a),var(--bg) 34%,color-mix(in srgb,var(--accent2) 20%,var(--bg)) 68%,var(--wash-b));
+}
+.content::before{
+  opacity:.30!important;
+  background-image:
+    radial-gradient(circle at center,color-mix(in srgb,var(--accent) 42%,transparent) 0 1px,transparent 1.6px),
+    linear-gradient(45deg,transparent 48%,color-mix(in srgb,var(--accent) 8%,transparent) 49% 51%,transparent 52%);
+  background-size:34px 34px,72px 72px!important;
+}
+.content::after{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.38;
+  background:
+    radial-gradient(circle at 4% 42%,color-mix(in srgb,var(--accent2) 28%,transparent) 0 6%,transparent 6.5%),
+    radial-gradient(circle at 96% 62%,color-mix(in srgb,var(--accent) 16%,transparent) 0 7%,transparent 7.5%);
+}
+.content .section{overflow:hidden;border-top:1px solid color-mix(in srgb,var(--accent) 9%,transparent);border-bottom:1px solid color-mix(in srgb,var(--accent) 8%,transparent)}
+.content .section::before{width:180px!important;height:180px!important;left:-84px!important;top:-46px!important;border:0!important;background:radial-gradient(circle,color-mix(in srgb,var(--accent2) 40%,transparent),transparent 68%)}
+.content .section::after{width:150px!important;height:150px!important;right:-62px!important;bottom:-50px!important;border:0!important;background:radial-gradient(circle,color-mix(in srgb,var(--accent) 22%,transparent),transparent 68%)}
+
+#story{
+  background:
+    linear-gradient(135deg,color-mix(in srgb,var(--paper) 58%,transparent),color-mix(in srgb,var(--accent2) 24%,var(--bg)))!important;
+}
+#event{
+  background:
+    radial-gradient(circle at 84% 16%,color-mix(in srgb,var(--accent) 18%,transparent),transparent 26%),
+    linear-gradient(145deg,color-mix(in srgb,var(--accent2) 30%,var(--bg)),color-mix(in srgb,var(--paper) 64%,var(--bg)))!important;
+}
+#gallery{
+  background:
+    radial-gradient(circle at 12% 88%,color-mix(in srgb,var(--accent) 16%,transparent),transparent 30%),
+    linear-gradient(135deg,color-mix(in srgb,var(--paper) 58%,var(--accent2)),color-mix(in srgb,var(--accent2) 22%,var(--bg)))!important;
+}
+#rsvp{
+  background:linear-gradient(155deg,color-mix(in srgb,var(--accent2) 36%,var(--bg)),color-mix(in srgb,var(--paper) 72%,var(--bg)))!important;
+}
+#wishes{
+  background:
+    radial-gradient(circle at 90% 20%,color-mix(in srgb,var(--accent) 18%,transparent),transparent 28%),
+    linear-gradient(145deg,color-mix(in srgb,var(--paper) 66%,var(--bg)),color-mix(in srgb,var(--accent2) 30%,var(--bg)))!important;
+}
+#photos{
+  background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 9%,var(--bg)),color-mix(in srgb,var(--accent2) 32%,var(--bg)))!important;
+}
+#gift{
+  background:
+    radial-gradient(circle at 50% 10%,color-mix(in srgb,var(--accent2) 44%,transparent),transparent 34%),
+    linear-gradient(180deg,color-mix(in srgb,var(--paper) 65%,var(--bg)),color-mix(in srgb,var(--accent2) 30%,var(--bg)))!important;
+}
+#thankYou{
+  background:
+    radial-gradient(circle at 20% 20%,color-mix(in srgb,var(--accent2) 34%,transparent),transparent 30%),
+    radial-gradient(circle at 85% 72%,color-mix(in srgb,var(--accent) 18%,transparent),transparent 30%),
+    linear-gradient(150deg,color-mix(in srgb,var(--paper) 62%,var(--bg)),color-mix(in srgb,var(--accent2) 34%,var(--bg)))!important;
+}
+.content .panel{
+  border:1px solid color-mix(in srgb,var(--accent) 19%,transparent)!important;
+  background:linear-gradient(150deg,color-mix(in srgb,var(--paper) 82%,transparent),color-mix(in srgb,var(--accent2) 13%,var(--paper)))!important;
+  box-shadow:0 24px 70px color-mix(in srgb,var(--ink) 12%,transparent),inset 0 0 0 7px color-mix(in srgb,var(--paper) 52%,transparent)!important;
+}
+.content .eyebrow{letter-spacing:.26em;text-shadow:0 1px 0 color-mix(in srgb,var(--paper) 80%,transparent)}
+.content h2{font-family:var(--serif-font,'Cormorant Garamond',Georgia,serif);letter-spacing:.01em}
+.story-text{background:color-mix(in srgb,var(--paper) 62%,transparent);border:1px solid color-mix(in srgb,var(--accent) 14%,transparent);border-radius:22px;padding:24px 26px;box-shadow:0 12px 34px color-mix(in srgb,var(--ink) 6%,transparent)}
+.countdown div{border-color:color-mix(in srgb,var(--accent) 20%,transparent)!important;background:linear-gradient(155deg,color-mix(in srgb,var(--paper) 86%,transparent),color-mix(in srgb,var(--accent2) 20%,var(--paper)))!important}
+.gallery-grid img,.gallery-more-tile{box-shadow:0 13px 34px color-mix(in srgb,var(--ink) 12%,transparent);border:6px solid color-mix(in srgb,var(--paper) 92%,transparent)!important}
+.gift .qr{box-shadow:0 18px 42px color-mix(in srgb,var(--ink) 14%,transparent);border:8px solid color-mix(in srgb,var(--paper) 94%,transparent)}
+.footer{background:linear-gradient(180deg,color-mix(in srgb,var(--accent2) 18%,var(--bg)),color-mix(in srgb,var(--accent) 8%,var(--bg)));border-top:1px solid color-mix(in srgb,var(--accent) 12%,transparent)}
+
+/* ---------- Admin phone preview: mirror the richer inner look ---------- */
+.phone-preview-screen{
+  background:
+    radial-gradient(circle at 15% 10%,color-mix(in srgb,var(--pv-accent2) 38%,transparent),transparent 26%),
+    linear-gradient(180deg,var(--pv-bg),color-mix(in srgb,var(--pv-accent2) 22%,var(--pv-bg)))!important;
+}
+.phone-section{position:relative;overflow:hidden;border-bottom-color:color-mix(in srgb,var(--pv-accent) 15%,transparent)!important}
+.phone-section::before{content:"";position:absolute;width:90px;height:90px;border-radius:50%;left:-48px;top:-36px;background:radial-gradient(circle,color-mix(in srgb,var(--pv-accent2) 42%,transparent),transparent 68%);pointer-events:none}
+.phone-section::after{content:"";position:absolute;width:74px;height:74px;border-radius:50%;right:-38px;bottom:-28px;background:radial-gradient(circle,color-mix(in srgb,var(--pv-accent) 22%,transparent),transparent 68%);pointer-events:none}
+.phone-date-section{background:linear-gradient(145deg,color-mix(in srgb,var(--pv-paper) 64%,var(--pv-bg)),color-mix(in srgb,var(--pv-accent2) 28%,var(--pv-bg)))!important}
+#pvSecStory{background:linear-gradient(150deg,color-mix(in srgb,var(--pv-accent2) 18%,var(--pv-bg)),color-mix(in srgb,var(--pv-paper) 72%,var(--pv-bg)))!important}
+#pvSecEvent{background:linear-gradient(145deg,color-mix(in srgb,var(--pv-accent2) 34%,var(--pv-bg)),color-mix(in srgb,var(--pv-paper) 68%,var(--pv-bg)))!important}
+#pvSecGallery{background:linear-gradient(145deg,color-mix(in srgb,var(--pv-paper) 62%,var(--pv-bg)),color-mix(in srgb,var(--pv-accent2) 30%,var(--pv-bg)))!important}
+#pvSecGift{background:radial-gradient(circle at 50% 12%,color-mix(in srgb,var(--pv-accent2) 42%,transparent),transparent 34%),linear-gradient(160deg,color-mix(in srgb,var(--pv-paper) 68%,var(--pv-bg)),color-mix(in srgb,var(--pv-accent2) 32%,var(--pv-bg)))!important}
+#pvSecThanks{background:radial-gradient(circle at 20% 20%,color-mix(in srgb,var(--pv-accent2) 35%,transparent),transparent 30%),linear-gradient(145deg,color-mix(in srgb,var(--pv-paper) 58%,var(--pv-bg)),color-mix(in srgb,var(--pv-accent2) 34%,var(--pv-bg)))!important}
+.phone-gallery-cell{border:4px solid color-mix(in srgb,var(--pv-paper) 92%,transparent)!important;box-shadow:0 8px 20px color-mix(in srgb,var(--pv-ink) 11%,transparent)}
+.phone-gift-qr{border:6px solid color-mix(in srgb,var(--pv-paper) 94%,transparent);box-shadow:0 10px 24px color-mix(in srgb,var(--pv-ink) 12%,transparent)}
+
+@media(max-width:720px){.content .section::before{width:130px!important;height:130px!important}.content .section::after{width:110px!important;height:110px!important}.story-text{padding:20px 18px}}
