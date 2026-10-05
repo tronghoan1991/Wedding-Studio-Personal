@@ -1,9 +1,25 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
-const SERVICE_ROLE = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-const ANON_KEY = Deno.env.get('SUPABASE_ANON_KEY')!;
-const admin = createClient(SUPABASE_URL, SERVICE_ROLE, { auth: { persistSession: false } });
+
+function firstNamedKey(envName: string) {
+  const raw = Deno.env.get(envName) || '';
+  if (!raw) return '';
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed?.default || Object.values(parsed || {})[0] || '';
+  } catch {
+    return raw;
+  }
+}
+
+// Prefer the current publishable/secret key model, but keep legacy fallback
+// so the project also works on Supabase projects that still expose anon/service_role.
+const PUBLISHABLE_KEY = firstNamedKey('SUPABASE_PUBLISHABLE_KEYS') || Deno.env.get('SUPABASE_ANON_KEY') || '';
+const SECRET_KEY = firstNamedKey('SUPABASE_SECRET_KEYS') || Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '';
+if (!SUPABASE_URL || !PUBLISHABLE_KEY || !SECRET_KEY) throw new Error('Missing Supabase environment keys');
+
+const admin = createClient(SUPABASE_URL, SECRET_KEY, { auth: { persistSession: false } });
 
 const cors = {
   'Access-Control-Allow-Origin': '*',
@@ -17,7 +33,7 @@ async function getUser(req: Request) {
   const auth = req.headers.get('Authorization') || '';
   if (!auth.startsWith('Bearer ')) return null;
   const token = auth.slice(7);
-  const userClient = createClient(SUPABASE_URL, ANON_KEY, { global: { headers: { Authorization: `Bearer ${token}` } }, auth:{ persistSession:false } });
+  const userClient = createClient(SUPABASE_URL, PUBLISHABLE_KEY, { global: { headers: { Authorization: `Bearer ${token}` } }, auth:{ persistSession:false } });
   const { data } = await userClient.auth.getUser();
   return data.user || null;
 }
