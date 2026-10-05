@@ -19,9 +19,16 @@
   const themeNames=Object.fromEntries(ADMIN_DATA.themes);
   const cardNames=Object.fromEntries(ADMIN_DATA.cards);
 
+  function normalizeText(v){
+    return String(v??'')
+      .normalize('NFC')
+      .replace(/[\u200B-\u200D\uFEFF]/g,'')
+      .replace(/[ \t]+/g,' ')
+      .replace(/ *\n */g,'\n');
+  }
   function text(name,fallback=''){
     const el=form.elements[name];
-    return String(el?.value||'').trim()||fallback;
+    return normalizeText(el?.value||'').trim()||fallback;
   }
   function fmtDate(value){
     if(!value)return 'Ngày cưới của chúng mình';
@@ -29,7 +36,7 @@
     if(Number.isNaN(d.getTime()))return value;
     return new Intl.DateTimeFormat('vi-VN',{weekday:'long',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}).format(d);
   }
-  function set(id,value){const el=$(id);if(el)el.textContent=value}
+  function set(id,value){const el=$(id);if(el)el.textContent=normalizeText(value)}
 
   function render(){
     const theme=text('theme','mint'),card=text('cardStyle','classic'),p=palettes[theme]||palettes.mint;
