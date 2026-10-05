@@ -21,7 +21,7 @@ Website chỉ phụ thuộc vào:
 1. GitHub Pages: HTML/CSS/JavaScript tĩnh.
 2. Supabase của bạn: Auth, Postgres, Storage và Edge Function.
 
-Không có PHP, cloudflared, tunnel, binary thực thi, mã obfuscate/eval, analytics hoặc server của bên phát triển cũ.
+Không có PHP, cloudflared, tunnel, binary thực thi, mã obfuscate/eval, analytics hoặc server.
 
 ## Thiết lập để kiểm thử
 
