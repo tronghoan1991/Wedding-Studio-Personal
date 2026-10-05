@@ -51,7 +51,12 @@ window.Api=(()=>{
     return jsonFetch(`${base}/functions/v1/${fn}`,{method,headers:h(adminToken),body:method==='GET'?undefined:JSON.stringify({action,siteId:activeSiteId,...bodyPayload})});
   }
   async function login(email,password){return jsonFetch(`${base}/auth/v1/token?grant_type=password`,{method:'POST',headers:h(),body:JSON.stringify({email,password})})}
-  async function table(path,token,opt={}){const actual=token?await ensureAdminToken(token):'';return jsonFetch(`${base}/rest/v1/${path}`,{...opt,headers:{...h(actual),Prefer:opt.prefer||'return=representation',...(opt.headers||{})}})}
+  function scopeTablePath(path,opt={}){
+    const method=String(opt.method||'GET').toUpperCase();if(method!=='GET')return path;
+    const m=String(path||'').match(/^(guests|rsvps|wishes|photos)(\?.*)?$/);if(!m||/([?&])site_id=/.test(path))return path;
+    return `${path}${path.includes('?')?'&':'?'}site_id=eq.${encodeURIComponent(activeSiteId)}`;
+  }
+  async function table(path,token,opt={}){const actual=token?await ensureAdminToken(token):'';const scoped=scopeTablePath(path,opt);return jsonFetch(`${base}/rest/v1/${scoped}`,{...opt,headers:{...h(actual),Prefer:opt.prefer||'return=representation',...(opt.headers||{})}})}
   async function storageUpload(bucket,path,file,token){const actual=await ensureAdminToken(token);const r=await fetch(`${base}/storage/v1/object/${bucket}/${path}`,{method:'POST',headers:{apikey:key,Authorization:`Bearer ${actual}`,'Content-Type':file.type,'x-upsert':'true'},body:file});if(!r.ok){let msg=await r.text();try{const j=JSON.parse(msg);msg=j?.message||j?.error||msg}catch{}throw new Error(msg)}return r.json()}
   return{cfg,ready,publicCall,login,table,storageUpload,ensureAdminToken,base,key,siteId,setSiteId};
 })();
