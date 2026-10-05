@@ -54,7 +54,6 @@
     });
   }
 
-  // Giữ nguyên admin.js hiện tại nhưng tự bổ sung invitationLine vào payload lưu.
   if(window.Api?.publicCall){
     const originalCall=window.Api.publicCall.bind(window.Api);
     window.Api.publicCall=(action,payload={},method='POST')=>{
@@ -62,6 +61,15 @@
         payload={...payload,payload:{...payload.payload,data:{...payload.payload.data,invitationLine:text('invitationLine','')}}};
       }
       return originalCall(action,payload,method);
+    };
+  }
+
+  if(window.Api?.table){
+    const originalTable=window.Api.table.bind(window.Api);
+    window.Api.table=async(path,token,opt={})=>{
+      const result=await originalTable(path,token,opt);
+      if(String(path).startsWith('site_settings'))setTimeout(render,0);
+      return result;
     };
   }
 
