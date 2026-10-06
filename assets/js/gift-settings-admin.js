@@ -16,6 +16,10 @@
   let tries=0;const timer=setInterval(()=>{tries++;if(!$('#dashboard')?.hidden){clearInterval(timer);load()}else if(tries>30)clearInterval(timer)},300);
 
   // Load the multi-invitation manager without changing the existing admin boot order.
-  if(!document.querySelector('link[data-site-manager]')){const l=document.createElement('link');l.rel='stylesheet';l.href='assets/css/site-manager.css?v=20261005-17';l.dataset.siteManager='1';document.head.appendChild(l)}
-  if(!document.querySelector('script[data-site-manager]')){const s=document.createElement('script');s.src='assets/js/site-manager.js?v=20261005-17';s.dataset.siteManager='1';document.body.appendChild(s)}
+  if(!document.querySelector('link[data-site-manager]')){const l=document.createElement('link');l.rel='stylesheet';l.href='assets/css/site-manager.css?v=20261006-1';l.dataset.siteManager='1';document.head.appendChild(l)}
+  if(!document.querySelector('script[data-site-manager]')){const s=document.createElement('script');s.src='assets/js/site-manager.js?v=20261006-1';s.dataset.siteManager='1';document.body.appendChild(s)}
+
+  // Cover editor enhancements: isolated cards + reorder controls.
+  if(!document.querySelector('link[data-cover-editor-fix]')){const l=document.createElement('link');l.rel='stylesheet';l.href='assets/css/cover-editor-fix.css?v=20261006-1';l.dataset.coverEditorFix='1';document.head.appendChild(l)}
+  if(!document.querySelector('script[data-cover-reorder]')){const s=document.createElement('script');s.src='assets/js/cover-reorder.js?v=20261006-1';s.dataset.coverReorder='1';document.body.appendChild(s)}
 })();
