@@ -4,7 +4,7 @@
   window.__WEDDING_SITE_MANAGER_LOADED__=true;
   const $=s=>document.querySelector(s);
   if(!window.Api)return;
-  let mounted=false,loading=false,booted=false,switching=false;
+  let mounted=false,loading=false;
   const session=()=>{try{return JSON.parse(sessionStorage.getItem('adminSession')||'null')}catch{return null}};
   const currentId=()=>Api.siteId?.()||Api.cfg.SITE_ID;
   const rootUrl=()=>`${location.origin}${location.pathname.replace(/admin\.html$/,'')}`;
@@ -24,7 +24,7 @@
     `;document.head.appendChild(s)}
   }
   const layoutMeta={
-    mint:['#f0f7f1','#527b68','Botanical lệch trái'],lavender:['#f5f0fa','#8064a2','Romantic card'],sunset:['#fff3ed','#c35f4d','Bất đối xứng'],wedding:['#faf6f2','#9a7568','Thiệp in cổ điển'],gold:['#13110d','#c7a657','Luxury điện ảnh'],songhy:['#fff4ef','#b51f1f','Lễ cưới Song hỷ'],magazine:['#f5f5f3','#111111','Tạp chí thời trang'],garden:['#f7f4f2','#71885f','Vườn hoa organic'],stars:['#080d1b','#8fa9ff','Đêm sao glass'],terracotta:['#f7eee8','#a85e43','Đất nung mái vòm'],minhanh:['#fff3f6','#d78398','Pastel hoa · mobile-first']
+    mint:['#f0f7f1','#527b68','Botanical lệch trái'],lavender:['#f5f0fa','#8064a2','Romantic card'],sunset:['#fff3ed','#c35f4d','Bất đối xứng'],wedding:['#faf6f2','#9a7568','Thiệp in cổ điển'],gold:['#13110d','#c7a657','Luxury điện ảnh'],songhy:['#fff4ef','#b51f1f','Lễ cưới Song hỷ'],magazine:['#f5f5f3','#111111','Tạp chí thời trang'],garden:['#f7f4f2','#71885f','Vườn hoa organic'],stars:['#080d1b','#8fa9ff','Đêm sao glass'],terracotta:['#f7eee8','#a85e43','Đất nung mái vòm']
   };
   function mountLayoutPicker(){
     ensureLayoutAssets();
@@ -65,10 +65,8 @@
       <small id="siteManagerStatus" class="status"></small>`;
     head.insertAdjacentElement('afterend',box);mounted=true;return box;
   }
-  async function listSites(force=false){
-    if(loading||switching)return;
-    if(booted&&!force){mountLayoutPicker();fixShareButtons();syncLayoutPicker();return}
-    loading=true;
+  async function listSites(){
+    if(loading)return;loading=true;
     const box=ui();if(!box){loading=false;return}
     const s=session();if(!s?.token){loading=false;return}
     const status=$('#siteManagerStatus');
@@ -82,17 +80,9 @@
         const link=publicUrl(picker.value);$('#activeSiteLink').textContent=link;
         const headerView=$('.admin-head a[href^="index.html"],.admin-head a[href*="Wedding-Studio-Personal"]');if(headerView)headerView.href=link;
       };refreshLink();
-      picker.onchange=()=>{
-        if(switching)return;
-        const next=picker.value;
-        if(!next||next===currentId())return;
-        switching=true;
-        picker.disabled=true;
-        status.textContent='Đang chuyển thiệp...';
-        location.replace(`admin.html?site=${encodeURIComponent(next)}`);
-      };
+      picker.onchange=()=>{location.href=`admin.html?site=${encodeURIComponent(picker.value)}`};
       $('#openSiteBtn').onclick=()=>window.open(publicUrl(picker.value),'_blank','noopener');
-      $('#copySiteBtn').onclick=async()=>{await copy(publicUrl(picker.value));status.textContent='Đã copy link thiệp.';setTimeout(()=>{if(status.textContent==='Đã copy link thiệp.')status.textContent=''},1500)};
+      $('#copySiteBtn').onclick=async()=>{await copy(publicUrl(picker.value));status.textContent='Đã copy link thiệp.';setTimeout(()=>status.textContent='',1500)};
       $('#createSiteBtn').onclick=async()=>{
         const name=prompt('Tên để quản lý thiệp mới (ví dụ: Thiệp nhà gái - Ngọc):','Thiệp mới');
         if(name===null)return;
@@ -101,25 +91,14 @@
         status.textContent='Đang tạo thiệp mới...';
         try{
           await Api.table('site_settings',token,{method:'POST',body:JSON.stringify({id,owner_id:user.id,owner_email:user.email||'',is_public:false,data})});
-          location.replace(`admin.html?site=${encodeURIComponent(id)}`);
+          location.href=`admin.html?site=${encodeURIComponent(id)}`;
         }catch(e){status.textContent=`Không tạo được: ${e.message}. Nếu đây là lần đầu bật nhiều thiệp, hãy chạy supabase/06_multi_site.sql.`}
       };
-      booted=true;status.textContent='';mountLayoutPicker();fixShareButtons();syncLayoutPicker();
+      status.textContent='';mountLayoutPicker();fixShareButtons();syncLayoutPicker();
     }catch(e){status.textContent=e.message||'Không tải được danh sách thiệp.'}
     finally{loading=false}
   }
-  function tryBoot(){
-    const d=$('#dashboard');
-    if(d&&!d.hidden&&session()?.token)listSites(false);
-  }
-  window.addEventListener('admin-session-refreshed',()=>setTimeout(()=>listSites(true),0));
-  window.addEventListener('pageshow',()=>setTimeout(tryBoot,0));
-  document.addEventListener('visibilitychange',()=>{if(!document.hidden)tryBoot()});
-  let bootAttempts=0;
-  const bootTimer=setInterval(()=>{
-    bootAttempts++;
-    if($('#dashboard')&&!$('#dashboard').hidden&&session()?.token){clearInterval(bootTimer);tryBoot()}
-    else if(bootAttempts>40)clearInterval(bootTimer);
-  },250);
-  tryBoot();
+  function watch(){const d=$('#dashboard');if(d&&!d.hidden&&session()?.token){listSites();mountLayoutPicker();fixShareButtons();syncLayoutPicker()}}
+  window.addEventListener('admin-session-refreshed',()=>setTimeout(listSites,0));
+  setInterval(watch,700);watch();
 })();
