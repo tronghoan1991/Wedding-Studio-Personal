@@ -3,8 +3,9 @@
   const $=s=>document.querySelector(s);let site=null,appsLoaded=false,apps=[];
   function safe(v){return String(v||'').trim()}
   function loadMinhAnhAssets(){
-    if(!document.querySelector('link[data-theme-minhanh]')){const l=document.createElement('link');l.rel='stylesheet';l.href='assets/css/theme-minhanh.css?v=20261006-1';l.dataset.themeMinhanh='1';document.head.appendChild(l)}
-    if(!document.querySelector('script[data-theme-minhanh]')){const s=document.createElement('script');s.src='assets/js/theme-minhanh.js?v=20261006-1';s.dataset.themeMinhanh='1';document.body.appendChild(s)}
+    if(!document.querySelector('link[data-theme-minhanh]')){const l=document.createElement('link');l.rel='stylesheet';l.href='assets/css/theme-minhanh.css?v=20261006-2';l.dataset.themeMinhanh='1';document.head.appendChild(l)}
+    const old=document.querySelector('script[data-theme-minhanh]');if(old)old.remove();
+    const s=document.createElement('script');s.src='assets/js/theme-minhanh.js?v=20261006-2';s.dataset.themeMinhanh='1';document.body.appendChild(s)
   }
   loadMinhAnhAssets();
   function removeLegacyPasswordUi(){
