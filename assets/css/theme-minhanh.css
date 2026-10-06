@@ -15,9 +15,7 @@ body[data-theme="minhanh"] .content:before{
   background-size:56px 56px,34px 34px;background-position:0 0,14px 18px;
 }
 body[data-theme="minhanh"] .content>.section{padding:42px max(18px,calc((100vw - 760px)/2));border:0!important;min-height:0!important;text-align:center;position:relative;z-index:1}
-body[data-theme="minhanh"] .content>.section>.panel,body[data-theme="minhanh"] .story-text{
-  max-width:720px;margin-inline:auto;background:rgba(255,253,253,.92)!important;border:1px solid rgba(215,131,152,.18)!important;border-radius:28px!important;box-shadow:0 14px 38px rgba(154,95,111,.08)!important;
-}
+body[data-theme="minhanh"] .content>.section>.panel,body[data-theme="minhanh"] .story-text{max-width:720px;margin-inline:auto;background:rgba(255,253,253,.92)!important;border:1px solid rgba(215,131,152,.18)!important;border-radius:28px!important;box-shadow:0 14px 38px rgba(154,95,111,.08)!important}
 body[data-theme="minhanh"] .eyebrow{font-family:Montserrat,sans-serif!important;letter-spacing:.24em;font-weight:600;color:#c66f86!important;font-size:.72rem}
 body[data-theme="minhanh"] h2{font-family:"Cormorant Garamond",Georgia,serif!important;color:#704c52;font-weight:600;font-size:clamp(2rem,8vw,3.2rem);margin:.25em 0 .45em}
 body[data-theme="minhanh"] #story{padding-top:46px}
@@ -58,12 +56,23 @@ body[data-theme="minhanh"] .cover-message{background:rgba(255,255,255,.78)!impor
 body[data-theme="minhanh"] .cover-open-btn{background:#d78398!important;color:#fff!important}
 
 /* Admin phone preview */
-.wedding-preview[data-theme="minhanh"]{--pv-bg:#fff2f5;--pv-paper:#fffdfd;--pv-ink:#704c52;--pv-muted:#9a7379;--pv-accent:#d78398;--pv-accent2:#f2c2ce;background:linear-gradient(180deg,#fff7f9,#fdecef)!important}
+.wedding-preview[data-theme="minhanh"]{--pv-bg:#fff2f5!important;--pv-paper:#fffdfd!important;--pv-ink:#704c52!important;--pv-muted:#9a7379!important;--pv-accent:#d78398!important;--pv-accent2:#f2c2ce!important;--bg:#fff2f5!important;--paper:#fffdfd!important;--ink:#704c52!important;--muted:#9a7379!important;--accent:#d78398!important;--accent2:#f2c2ce!important;background:linear-gradient(180deg,#fff7f9,#fdecef)!important}
+.wedding-preview[data-theme="minhanh"] .premium-cover{background:linear-gradient(180deg,#fff9fa,#fdeef2)!important}
+.wedding-preview[data-theme="minhanh"] .cover-paper{background:linear-gradient(180deg,#fffdfd,#fff7f9)!important;border-color:#efcfd7!important}
+.wedding-preview[data-theme="minhanh"] .cover-names span{color:#c96e85!important}
 .wedding-preview[data-theme="minhanh"] .phone-section{background:linear-gradient(180deg,#fffefd,#fff7f9)!important;text-align:center!important;padding:28px 18px!important}
 .wedding-preview[data-theme="minhanh"] .phone-section+.phone-section{border-top:1px solid #f1dfe4!important}
-.wedding-preview[data-theme="minhanh"] .phone-gallery{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
-.wedding-preview[data-theme="minhanh"] .phone-gallery img{border-radius:15px!important;aspect-ratio:4/5;object-fit:cover}
-.wedding-preview[data-theme="minhanh"] .phone-event-card,.wedding-preview[data-theme="minhanh"] .phone-form-card{border-radius:22px!important;background:#fff!important;border:1px solid #f0dce1!important;box-shadow:0 8px 24px rgba(154,95,111,.08)!important}
+.wedding-preview[data-theme="minhanh"] .phone-gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+.wedding-preview[data-theme="minhanh"] .phone-gallery-cell{border-radius:15px!important;overflow:hidden;background:#f8e9ed!important}
+.wedding-preview[data-theme="minhanh"] .phone-gallery-cell img{border-radius:15px!important;aspect-ratio:4/5;object-fit:cover;width:100%;height:100%}
+.wedding-preview[data-theme="minhanh"] .phone-event-section{background:linear-gradient(180deg,#fff,#fff8fa)!important}
+.wedding-preview[data-theme="minhanh"] .phone-map-pill{border-radius:999px!important;background:#d78398!important;color:#fff!important}
+.wedding-preview[data-theme="minhanh"] .preview-minhanh-calendar{margin:14px auto 0;padding:12px;border:1px solid #f0dce1;border-radius:18px;background:#fff;max-width:250px}
+.wedding-preview[data-theme="minhanh"] .preview-minhanh-calendar strong{display:block;color:#704c52;font-family:"Cormorant Garamond",serif;font-size:1.15rem;margin-bottom:6px}
+.wedding-preview[data-theme="minhanh"] .preview-minhanh-calendar div{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;font:500 8px/1 Montserrat,sans-serif;color:#9a7379}
+.wedding-preview[data-theme="minhanh"] .preview-minhanh-calendar span{display:grid;place-items:center;aspect-ratio:1;border-radius:50%}
+.wedding-preview[data-theme="minhanh"] .preview-minhanh-calendar .active{background:#d78398;color:#fff}
+.layout-choice[data-theme="minhanh"]{--lt-bg:#fff3f6!important;--lt-ac:#d78398!important}
 
 @media(max-width:600px){
   body[data-theme="minhanh"] .content>.section{padding:32px 16px!important}
