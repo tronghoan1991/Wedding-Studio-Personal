@@ -1,0 +1,11 @@
+/* Cover editor: isolated cards, no visual overlap, sortable controls */
+.cover-media-grid{width:100%!important;max-width:none!important;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))!important;gap:16px!important;align-items:start!important}
+.cover-editor-card{min-width:0!important;width:100%!important;overflow:hidden!important;contain:layout paint!important;isolation:isolate!important;padding:12px!important}
+.cover-editor-title{align-items:flex-start!important;flex-wrap:wrap!important}.cover-editor-title>span{margin-left:auto}
+.cover-editor-stage{width:100%!important;min-width:0!important;max-width:100%!important;overflow:hidden!important;contain:paint!important;isolation:isolate!important;aspect-ratio:4/3!important}
+.cover-editor-stage img{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;display:block!important;pointer-events:none!important}
+.cover-editor-controls{grid-template-columns:1fr!important;gap:9px!important}.cover-editor-controls>.btn{width:100%!important}.cover-zoom-control{grid-template-columns:auto minmax(0,1fr) auto!important}.cover-zoom-control input[type=range]{min-width:0!important}
+.cover-order-controls{display:flex;align-items:center;gap:6px;margin-left:auto}.cover-drag-handle{font-size:11px;color:var(--muted);cursor:grab;user-select:none;white-space:nowrap}.cover-order-btn{padding:4px 8px!important;min-width:34px!important;width:auto!important}.cover-order-btn:disabled{opacity:.35;cursor:not-allowed}
+.cover-editor-card.is-sorting{opacity:.55;transform:scale(.985)}.cover-editor-card.is-drop-target{outline:2px solid var(--accent);outline-offset:3px}
+@media(max-width:1200px){.cover-media-grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))!important}}
+@media(max-width:760px){.cover-media-grid{grid-template-columns:1fr!important}.cover-editor-title>span{width:100%;margin-left:0}.cover-order-controls{margin-left:0;width:100%;justify-content:flex-end}.cover-editor-stage{aspect-ratio:16/10!important}}
