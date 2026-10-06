@@ -1,0 +1,75 @@
+/* Mobile-first pastel floral layout inspired by the supplied reference video. */
+body[data-theme="minhanh"]{
+  --bg:#fff7f8;--paper:#fffdfd;--ink:#6e4b4f;--muted:#9a7379;--accent:#d78398;--accent2:#f3c7d2;--line:#f1dce1;
+  background:#fff7f8;
+}
+body[data-theme="minhanh"] .content{
+  background:
+    radial-gradient(circle at 8% 8%,rgba(242,183,198,.28),transparent 18%),
+    radial-gradient(circle at 92% 24%,rgba(255,220,228,.55),transparent 20%),
+    linear-gradient(180deg,#fffafb 0%,#fff5f7 52%,#fffafb 100%);
+}
+body[data-theme="minhanh"] .content:before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.34;
+  background-image:radial-gradient(circle,#e9aab9 0 2px,transparent 2.4px),radial-gradient(circle,#f3c4cf 0 1.4px,transparent 1.8px);
+  background-size:56px 56px,34px 34px;background-position:0 0,14px 18px;
+}
+body[data-theme="minhanh"] .content>.section{padding:42px max(18px,calc((100vw - 760px)/2));border:0!important;min-height:0!important;text-align:center;position:relative;z-index:1}
+body[data-theme="minhanh"] .content>.section>.panel,body[data-theme="minhanh"] .story-text{
+  max-width:720px;margin-inline:auto;background:rgba(255,253,253,.92)!important;border:1px solid rgba(215,131,152,.18)!important;border-radius:28px!important;box-shadow:0 14px 38px rgba(154,95,111,.08)!important;
+}
+body[data-theme="minhanh"] .eyebrow{font-family:Montserrat,sans-serif!important;letter-spacing:.24em;font-weight:600;color:#c66f86!important;font-size:.72rem}
+body[data-theme="minhanh"] h2{font-family:"Cormorant Garamond",Georgia,serif!important;color:#704c52;font-weight:600;font-size:clamp(2rem,8vw,3.2rem);margin:.25em 0 .45em}
+body[data-theme="minhanh"] #story{padding-top:46px}
+body[data-theme="minhanh"] #story .countdown{justify-content:center;gap:8px;margin:20px auto 0}
+body[data-theme="minhanh"] #story .countdown div{min-width:68px;padding:12px 8px;border-radius:18px;background:#fff;border:1px solid #f0dce1;box-shadow:0 8px 22px rgba(154,95,111,.06)}
+body[data-theme="minhanh"] #story .countdown strong{color:#c96e85;font-family:"Cormorant Garamond",serif;font-size:1.55rem}
+body[data-theme="minhanh"] #story .story-text{padding:22px 24px;margin-top:24px;line-height:1.75;background:rgba(255,255,255,.72)!important}
+body[data-theme="minhanh"] #event .panel{padding:28px 24px!important;background:linear-gradient(180deg,#fffefd,#fff8fa)!important}
+body[data-theme="minhanh"] #event .actions{justify-content:center}
+body[data-theme="minhanh"] #event .btn,body[data-theme="minhanh"] #rsvp .btn,body[data-theme="minhanh"] #wishes .btn,body[data-theme="minhanh"] #photos .btn,body[data-theme="minhanh"] #gift .btn{border-radius:999px!important;background:#d78398!important;border-color:#d78398!important;color:#fff!important;box-shadow:0 9px 22px rgba(196,103,129,.18)}
+body[data-theme="minhanh"] .minhanh-calendar{margin:24px auto 2px;max-width:360px;background:#fff;border:1px solid #f0dce1;border-radius:24px;padding:18px;box-shadow:0 12px 32px rgba(154,95,111,.08)}
+body[data-theme="minhanh"] .minhanh-calendar-head{font-family:"Cormorant Garamond",serif;font-size:1.55rem;font-weight:600;color:#704c52;margin-bottom:12px}
+body[data-theme="minhanh"] .minhanh-calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;font-family:Montserrat,sans-serif;font-size:.76rem}
+body[data-theme="minhanh"] .minhanh-calendar-grid span{aspect-ratio:1;display:grid;place-items:center;border-radius:50%;color:#84666c}
+body[data-theme="minhanh"] .minhanh-calendar-grid .dow{aspect-ratio:auto;font-size:.62rem;font-weight:600;color:#bf8896;padding-bottom:4px}
+body[data-theme="minhanh"] .minhanh-calendar-grid .empty{visibility:hidden}
+body[data-theme="minhanh"] .minhanh-calendar-grid .wedding-day{background:#d78398;color:#fff;font-weight:700;position:relative;box-shadow:0 6px 16px rgba(196,103,129,.22)}
+body[data-theme="minhanh"] .minhanh-calendar-grid .wedding-day:after{content:"♥";position:absolute;right:-4px;top:-8px;color:#d78398;font-size:.75rem}
+body[data-theme="minhanh"] #gallery{padding-top:46px}
+body[data-theme="minhanh"] .gallery-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;max-width:720px!important}
+body[data-theme="minhanh"] .gallery-grid img,body[data-theme="minhanh"] .gallery-more-tile{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:18px!important;border:0!important;box-shadow:0 8px 24px rgba(119,78,89,.09)!important;transform:none!important}
+body[data-theme="minhanh"] .gallery-more-tile{overflow:hidden;position:relative;background:#f8e9ed}
+body[data-theme="minhanh"] #rsvp .panel,body[data-theme="minhanh"] #wishes .panel,body[data-theme="minhanh"] #photos .panel,body[data-theme="minhanh"] #gift .panel{padding:26px 22px!important}
+body[data-theme="minhanh"] .form-grid{gap:16px}
+body[data-theme="minhanh"] input,body[data-theme="minhanh"] textarea,body[data-theme="minhanh"] fieldset{border-radius:16px!important;border-color:#ead4da!important;background:#fff!important}
+body[data-theme="minhanh"] #wishList .wish{background:#fff8fa;border:1px solid #f0dce1;border-radius:18px;padding:16px}
+body[data-theme="minhanh"] #gift .qr{border-radius:20px;background:#fff;padding:9px;box-shadow:0 10px 30px rgba(154,95,111,.10)}
+body[data-theme="minhanh"] #thankYou .thank-you-card{padding:34px 24px!important;background:linear-gradient(180deg,#fff,#fff7f9)!important;border-radius:30px!important}
+body[data-theme="minhanh"] #thankYou h2{font-family:"Great Vibes",cursive!important;font-weight:400;font-size:clamp(3rem,11vw,5rem);color:#d07088}
+body[data-theme="minhanh"] .music-btn{background:#d78398!important;box-shadow:0 12px 30px rgba(196,103,129,.26)!important}
+
+/* Cover adaptation: softer floral postcard, still uses the same uploaded photos. */
+body[data-theme="minhanh"] .premium-cover{background:linear-gradient(180deg,#fff9fa,#fdeef2)!important}
+body[data-theme="minhanh"] .cover-paper{background:linear-gradient(180deg,#fffdfd,#fff7f9)!important;border-color:#efcfd7!important;box-shadow:0 24px 70px rgba(154,95,111,.12)!important}
+body[data-theme="minhanh"] .cover-names span{color:#c96e85!important}
+body[data-theme="minhanh"] .cover-names{font-family:"Great Vibes",cursive!important}
+body[data-theme="minhanh"] .cover-message{background:rgba(255,255,255,.78)!important;border:1px solid #eed6dc!important;color:#7b5960!important;border-radius:18px!important}
+body[data-theme="minhanh"] .cover-open-btn{background:#d78398!important;color:#fff!important}
+
+/* Admin phone preview */
+.wedding-preview[data-theme="minhanh"]{--pv-bg:#fff2f5;--pv-paper:#fffdfd;--pv-ink:#704c52;--pv-muted:#9a7379;--pv-accent:#d78398;--pv-accent2:#f2c2ce;background:linear-gradient(180deg,#fff7f9,#fdecef)!important}
+.wedding-preview[data-theme="minhanh"] .phone-section{background:linear-gradient(180deg,#fffefd,#fff7f9)!important;text-align:center!important;padding:28px 18px!important}
+.wedding-preview[data-theme="minhanh"] .phone-section+.phone-section{border-top:1px solid #f1dfe4!important}
+.wedding-preview[data-theme="minhanh"] .phone-gallery{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+.wedding-preview[data-theme="minhanh"] .phone-gallery img{border-radius:15px!important;aspect-ratio:4/5;object-fit:cover}
+.wedding-preview[data-theme="minhanh"] .phone-event-card,.wedding-preview[data-theme="minhanh"] .phone-form-card{border-radius:22px!important;background:#fff!important;border:1px solid #f0dce1!important;box-shadow:0 8px 24px rgba(154,95,111,.08)!important}
+
+@media(max-width:600px){
+  body[data-theme="minhanh"] .content>.section{padding:32px 16px!important}
+  body[data-theme="minhanh"] .content>.section>.panel{border-radius:22px!important}
+  body[data-theme="minhanh"] #story .countdown{display:grid;grid-template-columns:repeat(4,1fr);width:100%}
+  body[data-theme="minhanh"] #story .countdown div{min-width:0;padding:10px 4px}
+  body[data-theme="minhanh"] .gallery-grid{gap:8px!important}
+  body[data-theme="minhanh"] #rsvp .panel,body[data-theme="minhanh"] #wishes .panel,body[data-theme="minhanh"] #photos .panel,body[data-theme="minhanh"] #gift .panel{padding:22px 18px!important}
+}
