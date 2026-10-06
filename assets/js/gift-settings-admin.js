@@ -22,6 +22,7 @@
   if(!document.querySelector('script[data-cover-reorder]')){const s=document.createElement('script');s.src='assets/js/cover-reorder.js?v=20261006-2';s.dataset.coverReorder='1';document.body.appendChild(s)}
 
   // Optional pastel floral layout based on the supplied reference video.
-  if(!document.querySelector('link[data-theme-minhanh]')){const l=document.createElement('link');l.rel='stylesheet';l.href='assets/css/theme-minhanh.css?v=20261006-1';l.dataset.themeMinhanh='1';document.head.appendChild(l)}
-  if(!document.querySelector('script[data-theme-minhanh-admin]')){const s=document.createElement('script');s.src='assets/js/theme-minhanh-admin.js?v=20261006-1';s.dataset.themeMinhanhAdmin='1';document.body.appendChild(s)}
+  if(!document.querySelector('link[data-theme-minhanh]')){const l=document.createElement('link');l.rel='stylesheet';l.href='assets/css/theme-minhanh.css?v=20261006-2';l.dataset.themeMinhanh='1';document.head.appendChild(l)}
+  const old=document.querySelector('script[data-theme-minhanh-admin]');if(old)old.remove();
+  const s=document.createElement('script');s.src='assets/js/theme-minhanh-admin.js?v=20261006-2';s.dataset.themeMinhanhAdmin='1';document.body.appendChild(s);
 })();
