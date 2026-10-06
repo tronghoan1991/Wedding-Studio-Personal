@@ -1,5 +1,7 @@
 (()=>{
   'use strict';
+  if(window.__WEDDING_SITE_MANAGER_LOADED__)return;
+  window.__WEDDING_SITE_MANAGER_LOADED__=true;
   const $=s=>document.querySelector(s);
   if(!window.Api)return;
   let mounted=false,loading=false;
@@ -48,7 +50,8 @@
     if(copyLink&&!copyLink.dataset.siteAware){copyLink.dataset.siteAware='1';copyLink.onclick=async()=>{await copy(activeShareUrl());setShareStatus('Đã copy đúng link thiệp này.')}}
   }
   function ui(){
-    if(mounted)return $('#siteManager');
+    const existing=$('#siteManager');if(existing){mounted=true;return existing}
+    if(mounted)return null;
     const head=$('.admin-head');if(!head)return null;
     const box=document.createElement('section');box.id='siteManager';box.className='site-manager panel';box.innerHTML=`
       <div class="site-manager-main">
