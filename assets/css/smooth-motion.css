@@ -1,0 +1,58 @@
+/* Smooth Wedding Motion — lightweight, GPU-friendly reveal transitions. */
+body[data-motion="smooth"]{scroll-behavior:smooth}
+body[data-motion="smooth"] .motion-item{
+  opacity:0;
+  transform:translate3d(0,24px,0) scale(.985);
+  transition:
+    opacity .76s cubic-bezier(.22,1,.36,1),
+    transform .76s cubic-bezier(.22,1,.36,1);
+  transition-delay:var(--motion-delay,0ms);
+}
+body[data-motion="smooth"] .motion-item[data-motion-kind="title"]{transform:translate3d(0,18px,0)}
+body[data-motion="smooth"] .motion-item[data-motion-kind="image"]{transform:translate3d(0,16px,0) scale(.965)}
+body[data-motion="smooth"] .motion-item[data-motion-kind="panel"]{transform:translate3d(0,28px,0) scale(.992)}
+body[data-motion="smooth"] .motion-item.motion-visible{
+  opacity:1;
+  transform:translate3d(0,0,0) scale(1);
+}
+body[data-motion="smooth"] .motion-item:not(.motion-visible){will-change:opacity,transform}
+
+body[data-motion="smooth"] #content.motion-content-enter{
+  animation:weddingContentIn .9s cubic-bezier(.22,1,.36,1) both;
+}
+body[data-motion="smooth"] #cover.is-opening{
+  animation:weddingCoverOut .78s cubic-bezier(.55,0,.2,1) both;
+}
+body[data-motion="smooth"] .btn,
+body[data-motion="smooth"] .gallery-more-tile,
+body[data-motion="smooth"] .music-btn{
+  transition:transform .28s cubic-bezier(.22,1,.36,1),box-shadow .28s ease,opacity .28s ease;
+}
+@media (hover:hover){
+  body[data-motion="smooth"] .btn:hover,
+  body[data-motion="smooth"] .gallery-more-tile:hover{transform:translateY(-2px)}
+}
+body[data-motion="smooth"] .btn:active,
+body[data-motion="smooth"] .gallery-more-tile:active{transform:scale(.985)}
+
+@keyframes weddingCoverOut{
+  0%{opacity:1;transform:translate3d(0,0,0) scale(1)}
+  58%{opacity:.62;transform:translate3d(0,-8px,0) scale(1.008)}
+  100%{opacity:0;transform:translate3d(0,-16px,0) scale(1.015)}
+}
+@keyframes weddingContentIn{
+  from{opacity:0;transform:translate3d(0,18px,0)}
+  to{opacity:1;transform:translate3d(0,0,0)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto!important}
+  body[data-motion="smooth"] .motion-item,
+  body[data-motion="smooth"] #content.motion-content-enter,
+  body[data-motion="smooth"] #cover.is-opening{
+    opacity:1!important;
+    transform:none!important;
+    animation:none!important;
+    transition:none!important;
+  }
+}
