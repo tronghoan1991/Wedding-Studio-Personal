@@ -1,0 +1,129 @@
+/* Wedding motion presets — presentation-only overrides layered after smooth-motion.css. */
+
+/* 1. FOCUS — existing behaviour. Intentionally no overrides. */
+
+/* 2. CINEMATIC — gentle fade, small vertical travel, minimal blur. */
+body[data-motion="smooth"][data-motion-preset="cinematic"] .content>.section.motion-scene.scene-future{
+  transform:translate3d(0,42px,0) scale(.975);
+  opacity:.28;
+  filter:blur(2.2px) saturate(.86);
+}
+body[data-motion="smooth"][data-motion-preset="cinematic"] .content>.section.motion-scene.scene-active{
+  transform:translate3d(0,0,0) scale(1);
+  opacity:1;
+  filter:none;
+}
+body[data-motion="smooth"][data-motion-preset="cinematic"] .content>.section.motion-scene.scene-past{
+  transform:translate3d(0,-30px,0) scale(.975);
+  opacity:.34;
+  filter:blur(1.7px) saturate(.82);
+}
+body[data-motion="smooth"][data-motion-preset="cinematic"] .motion-item{
+  transition-duration:.92s;
+  transition-timing-function:cubic-bezier(.16,1,.3,1);
+}
+
+/* 3. DEPTH — stronger foreground/background separation. */
+body[data-motion="smooth"][data-motion-preset="depth"] .content{
+  perspective:1200px;
+  perspective-origin:50% 50%;
+}
+body[data-motion="smooth"][data-motion-preset="depth"] .content>.section.motion-scene.scene-future{
+  transform:translate3d(0,54px,-90px) scale(.84);
+  opacity:.34;
+  filter:blur(2.6px) saturate(.72) brightness(.92);
+}
+body[data-motion="smooth"][data-motion-preset="depth"] .content>.section.motion-scene.scene-active{
+  transform:translate3d(0,0,0) scale(1);
+  opacity:1;
+  filter:none;
+}
+body[data-motion="smooth"][data-motion-preset="depth"] .content>.section.motion-scene.scene-past{
+  transform:translate3d(0,-42px,-110px) scale(.82);
+  opacity:.27;
+  filter:blur(2.8px) saturate(.66) brightness(.9);
+}
+body[data-motion="smooth"][data-motion-preset="depth"] .content>.section.motion-scene.scene-active>.panel,
+body[data-motion="smooth"][data-motion-preset="depth"] .content>.section.motion-scene.scene-active>.wedding-calendar-card{
+  box-shadow:0 32px 90px color-mix(in srgb,var(--ink) 15%,transparent);
+}
+
+/* 4. SLIDE EDITORIAL — alternating left/right entrances. */
+body[data-motion="smooth"][data-motion-preset="slide"] .content>.section.motion-scene.scene-future:nth-of-type(odd){
+  transform:translate3d(-58px,18px,0) scale(.95);
+  opacity:.36;
+  filter:saturate(.82);
+}
+body[data-motion="smooth"][data-motion-preset="slide"] .content>.section.motion-scene.scene-future:nth-of-type(even){
+  transform:translate3d(58px,18px,0) scale(.95);
+  opacity:.36;
+  filter:saturate(.82);
+}
+body[data-motion="smooth"][data-motion-preset="slide"] .content>.section.motion-scene.scene-active{
+  transform:translate3d(0,0,0) scale(1);
+  opacity:1;
+  filter:none;
+}
+body[data-motion="smooth"][data-motion-preset="slide"] .content>.section.motion-scene.scene-past:nth-of-type(odd){
+  transform:translate3d(46px,-20px,0) scale(.94);
+  opacity:.28;
+  filter:saturate(.74);
+}
+body[data-motion="smooth"][data-motion-preset="slide"] .content>.section.motion-scene.scene-past:nth-of-type(even){
+  transform:translate3d(-46px,-20px,0) scale(.94);
+  opacity:.28;
+  filter:saturate(.74);
+}
+body[data-motion="smooth"][data-motion-preset="slide"] .motion-item[data-motion-kind="title"]{
+  transition-duration:.68s;
+}
+
+/* 5. ROMANTIC — soft zoom, slower easing, delicate photo breathing. */
+body[data-motion="smooth"][data-motion-preset="romantic"] .content>.section.motion-scene.scene-future{
+  transform:translate3d(0,24px,0) scale(.93);
+  opacity:.48;
+  filter:blur(1.3px) saturate(.9);
+}
+body[data-motion="smooth"][data-motion-preset="romantic"] .content>.section.motion-scene.scene-active{
+  transform:translate3d(0,0,0) scale(1.012);
+  opacity:1;
+  filter:none;
+}
+body[data-motion="smooth"][data-motion-preset="romantic"] .content>.section.motion-scene.scene-past{
+  transform:translate3d(0,-18px,0) scale(.925);
+  opacity:.42;
+  filter:blur(1.1px) saturate(.86);
+}
+body[data-motion="smooth"][data-motion-preset="romantic"] .motion-item{
+  transition-duration:1.02s;
+  transition-timing-function:cubic-bezier(.16,1,.3,1);
+}
+body[data-motion="smooth"][data-motion-preset="romantic"] #gallery.motion-scene.scene-active #galleryGrid>img.motion-visible{
+  animation:romanticPhotoBreath 7.5s ease-in-out both;
+}
+@keyframes romanticPhotoBreath{
+  0%{filter:saturate(.94) brightness(.98)}
+  48%{filter:saturate(1.05) brightness(1.025)}
+  100%{filter:saturate(1) brightness(1)}
+}
+
+/* Keep interaction/layout stable on narrow screens. */
+@media(max-width:600px){
+  body[data-motion="smooth"][data-motion-preset="slide"] .content>.section.motion-scene.scene-future:nth-of-type(odd){transform:translate3d(-34px,16px,0) scale(.94)}
+  body[data-motion="smooth"][data-motion-preset="slide"] .content>.section.motion-scene.scene-future:nth-of-type(even){transform:translate3d(34px,16px,0) scale(.94)}
+  body[data-motion="smooth"][data-motion-preset="slide"] .content>.section.motion-scene.scene-past:nth-of-type(odd){transform:translate3d(28px,-16px,0) scale(.93)}
+  body[data-motion="smooth"][data-motion-preset="slide"] .content>.section.motion-scene.scene-past:nth-of-type(even){transform:translate3d(-28px,-16px,0) scale(.93)}
+  body[data-motion="smooth"][data-motion-preset="depth"] .content>.section.motion-scene.scene-future{transform:translate3d(0,42px,-70px) scale(.86)}
+  body[data-motion="smooth"][data-motion-preset="depth"] .content>.section.motion-scene.scene-past{transform:translate3d(0,-34px,-80px) scale(.84)}
+}
+
+@media(prefers-reduced-motion:reduce){
+  body[data-motion="smooth"][data-motion-preset] .content>.section.motion-scene{
+    transform:none!important;
+    opacity:1!important;
+    filter:none!important;
+  }
+  body[data-motion="smooth"][data-motion-preset="romantic"] #galleryGrid>img.motion-visible{
+    animation:none!important;
+  }
+}
