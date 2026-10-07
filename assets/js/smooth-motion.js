@@ -55,7 +55,7 @@
       if(el.getBoundingClientRect().top<innerHeight*.9)el.classList.add('motion-visible');
       else el.classList.remove('motion-visible');
     });
-    observer=null;refresh();
+    observer?.disconnect();observer=null;refresh();
   }
   window.WeddingMotion={refresh,enterContent,syncMode};
   const boot=()=>{refresh();syncMode()};
