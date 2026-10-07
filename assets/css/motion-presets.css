@@ -240,3 +240,119 @@ body[data-motion="smooth"][data-motion-preset="parallax"] .motion-item.motion-vi
     clip-path:none!important;
   }
 }
+
+
+/* Performance overrides for the three side-motion presets.
+   Keep them compositor-friendly: transform + opacity only on large sections. */
+body[data-motion="smooth"][data-motion-preset="split"] .content>.section.motion-scene,
+body[data-motion="smooth"][data-motion-preset="opposite"] .content>.section.motion-scene,
+body[data-motion="smooth"][data-motion-preset="parallax"] .content>.section.motion-scene{
+  filter:none!important;
+  will-change:auto!important;
+  transition:
+    transform .56s cubic-bezier(.22,1,.36,1),
+    opacity .46s ease!important;
+}
+
+/* Split: imitate a center opening with horizontal scale instead of animated clip-path. */
+body[data-motion="smooth"][data-motion-preset="split"] .content>.section.motion-scene{
+  clip-path:none!important;
+  transform-origin:center center;
+}
+body[data-motion="smooth"][data-motion-preset="split"] .content>.section.motion-scene.scene-future{
+  transform:translate3d(0,18px,0) scaleX(.78) scaleY(.97)!important;
+  opacity:.42!important;
+}
+body[data-motion="smooth"][data-motion-preset="split"] .content>.section.motion-scene.scene-active{
+  transform:translate3d(0,0,0) scale(1)!important;
+  opacity:1!important;
+}
+body[data-motion="smooth"][data-motion-preset="split"] .content>.section.motion-scene.scene-past{
+  transform:translate3d(0,-14px,0) scale(.94)!important;
+  opacity:.34!important;
+}
+
+/* Opposite: left/right motion only, no blur/rotation. */
+body[data-motion="smooth"][data-motion-preset="opposite"] .content>.section.motion-scene:nth-of-type(odd).scene-future{
+  transform:translate3d(-56px,14px,0) scale(.95)!important;
+  opacity:.40!important;
+}
+body[data-motion="smooth"][data-motion-preset="opposite"] .content>.section.motion-scene:nth-of-type(even).scene-future{
+  transform:translate3d(56px,14px,0) scale(.95)!important;
+  opacity:.40!important;
+}
+body[data-motion="smooth"][data-motion-preset="opposite"] .content>.section.motion-scene.scene-active{
+  transform:translate3d(0,0,0) scale(1)!important;
+  opacity:1!important;
+}
+body[data-motion="smooth"][data-motion-preset="opposite"] .content>.section.motion-scene:nth-of-type(odd).scene-past{
+  transform:translate3d(46px,-12px,0) scale(.94)!important;
+  opacity:.32!important;
+}
+body[data-motion="smooth"][data-motion-preset="opposite"] .content>.section.motion-scene:nth-of-type(even).scene-past{
+  transform:translate3d(-46px,-12px,0) scale(.94)!important;
+  opacity:.32!important;
+}
+
+/* Parallax-lite: preserve crossing direction without perspective/translateZ/filters. */
+body[data-motion="smooth"][data-motion-preset="parallax"] .content{
+  perspective:none!important;
+}
+body[data-motion="smooth"][data-motion-preset="parallax"] .content>.section.motion-scene:nth-of-type(odd).scene-future{
+  transform:translate3d(-42px,20px,0) scale(.94)!important;
+  opacity:.42!important;
+}
+body[data-motion="smooth"][data-motion-preset="parallax"] .content>.section.motion-scene:nth-of-type(even).scene-future{
+  transform:translate3d(42px,20px,0) scale(.94)!important;
+  opacity:.42!important;
+}
+body[data-motion="smooth"][data-motion-preset="parallax"] .content>.section.motion-scene.scene-active{
+  transform:translate3d(0,0,0) scale(1)!important;
+  opacity:1!important;
+}
+body[data-motion="smooth"][data-motion-preset="parallax"] .content>.section.motion-scene:nth-of-type(odd).scene-past{
+  transform:translate3d(34px,-16px,0) scale(.93)!important;
+  opacity:.30!important;
+}
+body[data-motion="smooth"][data-motion-preset="parallax"] .content>.section.motion-scene:nth-of-type(even).scene-past{
+  transform:translate3d(-34px,-16px,0) scale(.93)!important;
+  opacity:.30!important;
+}
+body[data-motion="smooth"][data-motion-preset="parallax"] .motion-item:not(.motion-visible)[data-motion-kind="title"]{
+  transform:translate3d(20px,10px,0)!important;
+}
+body[data-motion="smooth"][data-motion-preset="parallax"] .motion-item:not(.motion-visible)[data-motion-kind="panel"],
+body[data-motion="smooth"][data-motion-preset="parallax"] .motion-item:not(.motion-visible)[data-motion-kind="image"]{
+  transform:translate3d(-18px,12px,0) scale(.985)!important;
+}
+
+/* Mobile: smaller travel distance for steadier 60fps scrolling. */
+@media(max-width:768px){
+  body[data-motion="smooth"][data-motion-preset="split"] .content>.section.motion-scene.scene-future{
+    transform:translate3d(0,12px,0) scaleX(.84) scaleY(.985)!important;
+  }
+  body[data-motion="smooth"][data-motion-preset="opposite"] .content>.section.motion-scene:nth-of-type(odd).scene-future{
+    transform:translate3d(-30px,10px,0) scale(.965)!important;
+  }
+  body[data-motion="smooth"][data-motion-preset="opposite"] .content>.section.motion-scene:nth-of-type(even).scene-future{
+    transform:translate3d(30px,10px,0) scale(.965)!important;
+  }
+  body[data-motion="smooth"][data-motion-preset="opposite"] .content>.section.motion-scene:nth-of-type(odd).scene-past{
+    transform:translate3d(24px,-8px,0) scale(.955)!important;
+  }
+  body[data-motion="smooth"][data-motion-preset="opposite"] .content>.section.motion-scene:nth-of-type(even).scene-past{
+    transform:translate3d(-24px,-8px,0) scale(.955)!important;
+  }
+  body[data-motion="smooth"][data-motion-preset="parallax"] .content>.section.motion-scene:nth-of-type(odd).scene-future{
+    transform:translate3d(-24px,12px,0) scale(.96)!important;
+  }
+  body[data-motion="smooth"][data-motion-preset="parallax"] .content>.section.motion-scene:nth-of-type(even).scene-future{
+    transform:translate3d(24px,12px,0) scale(.96)!important;
+  }
+  body[data-motion="smooth"][data-motion-preset="parallax"] .content>.section.motion-scene:nth-of-type(odd).scene-past{
+    transform:translate3d(18px,-8px,0) scale(.95)!important;
+  }
+  body[data-motion="smooth"][data-motion-preset="parallax"] .content>.section.motion-scene:nth-of-type(even).scene-past{
+    transform:translate3d(-18px,-8px,0) scale(.95)!important;
+  }
+}
